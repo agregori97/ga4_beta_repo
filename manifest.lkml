@@ -1,19 +1,17 @@
-project_name: "ga_four_test"
+project_name: "test_ga4_beta"
 
-# # Use local_dependency: To enable referencing of another project
-# # on this instance with include: statements
-#
-# local_dependency: {
-#   project: "name_of_other_project"
-# }
-remote_dependency: ga_four {
-  url: "https://github.com/agregori97/ga_four_block"
-  ref: "master"
-  override_constant: GA4_CONNECTION {
-    value: "agregori-connection"
-  }
-  override_constant: GA4_SCHEMA {
-    value: "analytics_301098936"
-  }
+## Connection Constants:
+constant: GA4_CONNECTION {
+  value: "agregori-connection"
+  export: override_required
+}
 
+constant: GA4_SCHEMA {
+  value: "analytics_301098936"
+  export: override_optional
+}
+
+constant: GA4_TABLE_VARIABLE {
+  value: "events_*"
+  export: override_optional
 }
