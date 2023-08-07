@@ -1,4 +1,4 @@
 remote_dependency: ga_four {
   url: "https://github.com/agregori97/ga_four_block"
-  ref: "9b5e39a713c15a7187abad0128b594eee6bc2c49"
+  ref: "65330a7a1f91a0b0cd388fd20e944a90ac9a7a23"
 }

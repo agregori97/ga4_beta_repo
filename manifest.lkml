@@ -12,7 +12,6 @@ remote_dependency: ga_four {
   override_constant: GA4_CONNECTION {
     value: "agregori-connection"
   }
-
   override_constant: GA4_SCHEMA {
     value: "analytics_301098936"
   }
