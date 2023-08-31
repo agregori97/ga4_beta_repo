@@ -7,7 +7,7 @@ constant: GA4_CONNECTION {
 }
 
 constant: GA4_SCHEMA {
-  value: "analytics_301098936"
+  value: "ga4_export"
   export: override_optional
 }
 
