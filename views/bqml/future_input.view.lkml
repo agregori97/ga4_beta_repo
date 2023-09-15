@@ -25,7 +25,7 @@ view: future_input {
         FROM
           `@{GA4_SCHEMA}.@{GA4_TABLE_VARIABLE}` AS GA
         WHERE
-          _TABLE_SUFFIX > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @GA4_BQML_future_synth_months MONTH))
+          _TABLE_SUFFIX > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH))
         GROUP BY
           user_pseudo_id
       ),
@@ -40,7 +40,7 @@ view: future_input {
         LEFT JOIN visitors_labeled AS Labels
           ON GA.user_pseudo_id = Labels.user_pseudo_id
         WHERE
-          _TABLE_SUFFIX > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @GA4_BQML_future_synth_months MONTH))
+          _TABLE_SUFFIX > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH))
         AND (
           GA.event_timestamp < IFNULL(event_session, 0)
           OR event_session IS NULL)
@@ -63,7 +63,7 @@ view: future_input {
         LEFT JOIN visitors_labeled AS Labels
           ON GA.user_pseudo_id = Labels.user_pseudo_id
         WHERE
-          _TABLE_SUFFIX > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @GA4_BQML_future_synth_months MONTH))
+          _TABLE_SUFFIX > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH))
         AND (
           GA.event_timestamp < IFNULL(event_session, 0)
           OR event_session IS NULL)
@@ -105,7 +105,7 @@ view: future_input {
         LEFT JOIN visitors_labeled AS Labels
           ON GA.user_pseudo_id = Labels.user_pseudo_id
         WHERE
-          _TABLE_SUFFIX > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @GA4_BQML_future_synth_months MONTH))
+          _TABLE_SUFFIX > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH))
         AND (
           GA.event_timestamp < IFNULL(event_session, 0)
           OR event_session IS NULL)
@@ -143,7 +143,7 @@ view: future_input {
           LEFT JOIN visitors_labeled AS Labels
             ON GA.user_pseudo_id = Labels.user_pseudo_id
           WHERE
-            _TABLE_SUFFIX > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @GA4_BQML_future_synth_months MONTH))
+            _TABLE_SUFFIX > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH))
           AND (
             GA.event_timestamp < IFNULL(event_session, 0)
             OR event_session IS NULL)
@@ -200,7 +200,7 @@ view: future_input {
         LEFT JOIN event_cnts AS Event_counts
           ON GA.user_pseudo_id = Event_counts.user_pseudo_id
         WHERE
-          _TABLE_SUFFIX > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @GA4_BQML_future_synth_months MONTH))
+          _TABLE_SUFFIX > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH))
           AND (
             GA.event_timestamp < IFNULL(event_session, 0)
             OR event_session IS NULL)

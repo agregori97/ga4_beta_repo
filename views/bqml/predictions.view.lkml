@@ -13,12 +13,15 @@ view: future_purchase_model {
       OPTIONS(
         MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
         BOOSTER_TYPE = 'GBTREE',
-        MAX_ITERATIONS = 50,
-        SUBSAMPLE = 0.5,
+        MAX_ITERATIONS = 100,
+        --LEARN_RATE = 0.1,
+        COLSAMPLE_BYLEVEL = 0.85,
+        SUBSAMPLE = 0.85,
         NUM_PARALLEL_TREE = 1,
         DATA_SPLIT_METHOD = 'AUTO_SPLIT',
-        EARLY_STOP = TRUE,
+        EARLY_STOP = FALSE,
         ENABLE_GLOBAL_EXPLAIN = TRUE,
+        APPROX_GLOBAL_FEATURE_CONTRIB = TRUE,
         INPUT_LABEL_COLS = ['will_purchase_in_future']
       ) AS
       SELECT
