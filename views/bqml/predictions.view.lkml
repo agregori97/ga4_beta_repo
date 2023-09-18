@@ -37,6 +37,7 @@ explore:  future_purchase_model_evaluation {}
 explore: future_purchase_model_training_info {}
 explore: roc_curve {}
 explore: confusion_matrix {}
+explore: feature_importance {}
 
 # VIEWS:
 view: future_purchase_model_evaluation {
@@ -104,7 +105,7 @@ view: confusion_matrix {
         (SELECT * FROM ${testing_input.SQL_TABLE_NAME}));;
   }
   dimension: Expected_label {type:string}
-  dimension: Predicted_0 {type: number }
+  dimension: Predicted_0 {type: number}
   dimension: Predicted_1 {type: number}
 }
 
@@ -139,29 +140,64 @@ view: future_purchase_model_training_info {
     value_format_name: decimal_1
   }
 }
-########################################## PREDICT FUTURE ############################
 
+view: feature_importance {
+  derived_table: {
+    sql: SELECT
+      *
+    FROM
+      ML.GLOBAL_EXPLAIN(MODEL ${future_purchase_model.SQL_TABLE_NAME});;
+  }
+  dimension: feature {type:string}
+  dimension: attribution {type: number value_format_name: decimal_2}
+}
+
+########################################## PREDICT FUTURE ############################
+explore:  future_purchase_prediction {}
 view: future_purchase_prediction {
   derived_table: {
-    sql: SELECT * FROM ml.PREDICT(
+    sql: select
+          pred.*,
+          predicted_will_purchase_in_future_probs_unnest.prob as pred_probability from
+          (SELECT * FROM ml.PREDICT(
           MODEL ${future_purchase_model.SQL_TABLE_NAME},
-          (SELECT * FROM ${future_input.SQL_TABLE_NAME}));;
+          (SELECT * FROM ${future_input.SQL_TABLE_NAME}))) pred
+          left join unnest(pred.predicted_will_purchase_in_future_probs) as predicted_will_purchase_in_future_probs_unnest
+          where predicted_will_purchase_in_future_probs_unnest.label=1
+          ;;
   }
   dimension: predicted_will_purchase_in_future {type: number}
   # dimension: sl_key {type: number hidden:yes}
-  dimension: user_pseudo_id {type: number hidden: yes}
-  measure: max_predicted_score {
-    type: max
+  # dimension: user_pseudo_id {type: number hidden: yes}
+  dimension: user_pseudo_id {type: number}
+  # dimension: prob {type: number hidden: yes}
+
+  dimension: pred_probability {
+    type: number
     value_format_name: percent_2
-    sql: ${predicted_will_purchase_in_future} ;;
+    sql: ${TABLE}.pred_probability ;;
+    drill_fields: [user_pseudo_id]
   }
-  measure: median_predicted_score {
-    type: median
-    sql: ${predicted_will_purchase_in_future} ;;
+
+  dimension: pred_probability_bucket {
+    case: {
+      when: {
+        sql: ${TABLE}.pred_probability <= 0.25;;
+        label: "Low"
+      }
+      when: {
+        sql: ${TABLE}.pred_probability > 0.25 AND ${TABLE}.pred_probability <= 0.75;;
+        label: "Medium"
+      }
+      when: {
+        sql: ${TABLE}.pred_probability > 0.75;;
+        label: "High"
+      }
+      else:"Unknown"
+    }
+    drill_fields: [user_pseudo_id]
   }
-  measure: average_predicted_score {
-    type: average
-    value_format_name: percent_2
-    sql: ${predicted_will_purchase_in_future} ;;
+  measure: count {
+    type: count
   }
 }
