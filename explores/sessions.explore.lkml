@@ -43,4 +43,67 @@ explore: sessions {
     sql_on: ${sessions.sl_key} = ${future_purchase_prediction.sl_key} ;;
   }
 
+  join: paid_shopping {
+    fields: []
+    sql_on: ${sessions.session_attribution_source}=${paid_shopping.channel}
+    or REGEXP_CONTAINS(${sessions.session_attribution_campaign}, r"^(.*(([^a-df-z]|^)shop|shopping).*)$") = true )
+       and REGEXP_CONTAINS(${sessions.session_attribution_medium}, r"^(.*cp.*|ppc|paid.*)$") = true;;
+    relationship: many_to_one
+  }
+  join: paid_social {
+    fields: []
+    sql_on: ${sessions.session_attribution_source}=${paid_social.channel} and
+    REGEXP_CONTAINS(${sessions.session_attribution_medium}, r"^(.*cp.*|ppc|paid.*)$") = true ;;
+    relationship: many_to_one
+  }
+
+  join: paid_video {
+    fields: []
+    sql_on: ${sessions.session_attribution_source}=${paid_video.channel} and
+    REGEXP_CONTAINS(${sessions.session_attribution_medium}, r"^(.*cp.*|ppc|paid.*)$") = tru;;
+    relationship: many_to_one
+  }
+  join: paid_search {
+    fields: []
+    sql_on: ${sessions.session_attribution_source}=${paid_search.channel}
+    and REGEXP_CONTAINS(${sessions.session_attribution_medium}, r"^(.*cp.*|ppc|paid.*)$") = true;;
+    relationship: many_to_one
+  }
+  join: organic_shopping {
+    fields: []
+    sql_on: ${sessions.session_attribution_source}=${organic_shopping.channel}
+      or REGEXP_CONTAINS(${sessions.session_attribution_campaign}, r"^(.*(([^a-df-z]|^)shop|shopping).*)$") = true;;
+    relationship: many_to_one
+  }
+  join: organic_social {
+    fields: []
+    sql_on: ${sessions.session_attribution_source}=${organic_social.channel}
+      or REGEXP_CONTAINS(${sessions.session_attribution_medium}, r"(social|social-network|social-media|sm|social network|social media)") = true;;
+    relationship: many_to_one
+  }
+  join: organic_video {
+    fields: []
+    sql_on: ${sessions.session_attribution_source}=${organic_video.channel}
+       or REGEXP_CONTAINS(${sessions.session_attribution_medium}, r"^(.*video.*)$") = true;;
+    relationship: many_to_one
+  }
+  join: organic_search {
+    fields: []
+    sql_on: ${sessions.session_attribution_source}=${organic_video.channel}
+     or ${sessions.session_attribution_medium} = 'organic';;
+    relationship: many_to_one
+  }
+  join: others {
+    fields: []
+    sql_on: ${sessions.session_attribution_medium} LIKE ${others.medium};;
+    relationship: many_to_one
+  }
+
+
+  join: attribution_sources {
+    sql:  ;;
+  relationship: one_to_one
+  view_label: "GA4 Sessions"
+  }
+
 }
