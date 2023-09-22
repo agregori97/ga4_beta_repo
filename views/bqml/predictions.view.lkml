@@ -1,104 +1,7 @@
 ######################## TRAINING/TESTING INPUTS #############################
-
-# explore:future_purchase_label{}
-view: future_purchase_label {
-  derived_table: {
-    explore_source: sessions {
-      column: user_pseudo_id {}
-      # column: event_data {}
-      # column: event_name { field: events.event_name }
-      column: transaction_id { field: events.ecommerce__transaction_id}
-      filters: {
-        field: sessions.session_date
-        value: "60 days ago for 60 days"
-      }
-      filters: {
-        field: events.event_name
-        value: "purchase"
-      }
-      filters: {
-        field: events.ecommerce__transaction_id
-        value: "-(not set)"
-      }
-      filters: {
-        field: events.ecommerce__transaction_id
-        value: "-NULL"
-      }
-    }
-  }
-  dimension: user_pseudo_id {}
-  dimension: transaction_id {}
-}
-
-view: training_input_wo_label {
-  derived_table: {
-    explore_source: sessions {
-      column: sl_key {}
-      column: user_pseudo_id {}
-      # column: session_data {}
-      column: session_attribution_medium {}
-      column: session_attribution_channel {}
-      column: device_is_mobile {}
-      column: geo_data_country {}
-      column: total_bounced_sessions {}
-      column: pageviews_total { field: events.total_page_views }
-      column: transactions_count { field: events.total_transactions }
-      column: total_first_visit_sessions {}
-      # column: will_purchase_in_future {field: future_purchase_label.will_purchase_in_future}
-      filters: {
-        field: sessions.session_date
-        value: "180 days ago for 90 days"
-      }
-    }
-  }
-}
-
-view: training_input {
-  derived_table: {
-    sql: SELECT ti.*,case when tl.will_purchase_in_future = 1 then "1" else "0" end as will_purchase_in_future
-    FROM ${training_input_wo_label.SQL_TABLE_NAME} ti
-    left join
-    (select user_pseudo_id, IF(count(distinct transaction_id) >0,1,0) as will_purchase_in_future  from
-    ${future_purchase_label.SQL_TABLE_NAME}
-    group by user_pseudo_id) tl
-    on ti.user_pseudo_id = tl.user_pseudo_id
-    ;;
-  }
-}
-
-view: testing_input_wo_label {
-  derived_table: {
-    explore_source: sessions {
-      column: sl_key {}
-      column: user_pseudo_id {}
-      column: session_attribution_medium {}
-      column: session_attribution_channel {}
-      column: device_is_mobile {}
-      column: geo_data_country {}
-      column: total_bounced_sessions {}
-      column: pageviews_total { field: events.total_page_views }
-      column: transactions_count { field: events.total_transactions }
-      column: total_first_visit_sessions {}
-      # column: will_purchase_in_future {field: future_purchase_label.will_purchase_in_future}
-      filters: {
-        field: sessions.session_date
-        value: "130 days ago for 90 days"
-      }
-    }
-  }
-}
-
-view: testing_input {
-  derived_table: {
-    sql: SELECT ti.*,case when tl.will_purchase_in_future = 1 then "1" else "0" end as will_purchase_in_future
-          FROM ${testing_input_wo_label.SQL_TABLE_NAME} ti
-          left join (select user_pseudo_id, IF(count(distinct transaction_id) >0,1,0) as will_purchase_in_future  from
-          ${future_purchase_label.SQL_TABLE_NAME}
-          group by user_pseudo_id) tl
-          on ti.user_pseudo_id = tl.user_pseudo_id
-          ;;
-  }
-}
+include: "/views/bqml/future_input.view"
+include: "/views/bqml/training_input.view"
+include: "/views/bqml/testing_input.view"
 
 ######################## MODEL #############################
 
@@ -107,11 +10,24 @@ view: future_purchase_model {
     datagroup_trigger: bqml_datagroup
     sql_create:
       CREATE OR REPLACE MODEL ${SQL_TABLE_NAME}
-      OPTIONS(model_type='logistic_reg'
-        , labels=['will_purchase_in_future']
-        ) AS
+      OPTIONS(
+        MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
+        BOOSTER_TYPE = 'GBTREE',
+        MAX_ITERATIONS = 100,
+        --LEARN_RATE = 0.1,
+        COLSAMPLE_BYLEVEL = 0.85,
+        COLSAMPLE_BYTREE = 0.85,
+        COLSAMPLE_BYNODE = 0.85,
+        SUBSAMPLE = 0.85,
+        --NUM_PARALLEL_TREE = 10,
+        DATA_SPLIT_METHOD = 'AUTO_SPLIT',
+        EARLY_STOP = FALSE,
+        ENABLE_GLOBAL_EXPLAIN = TRUE,
+        APPROX_GLOBAL_FEATURE_CONTRIB = TRUE,
+        INPUT_LABEL_COLS = ['will_purchase_in_future']
+      ) AS
       SELECT
-        * EXCEPT(user_pseudo_id, sl_key)
+        * EXCEPT(user_pseudo_id)
       FROM ${training_input.SQL_TABLE_NAME};;
   }
 }
@@ -120,6 +36,8 @@ view: future_purchase_model {
 explore:  future_purchase_model_evaluation {}
 explore: future_purchase_model_training_info {}
 explore: roc_curve {}
+explore: confusion_matrix {}
+explore: feature_importance {}
 
 # VIEWS:
 view: future_purchase_model_evaluation {
@@ -180,6 +98,17 @@ view: roc_curve {
   }
 }
 
+view: confusion_matrix {
+  derived_table: {
+    sql: SELECT Expected_label,_0 as Predicted_0,_1 as Predicted_1  FROM ml.confusion_matrix(
+        MODEL ${future_purchase_model.SQL_TABLE_NAME},
+        (SELECT * FROM ${testing_input.SQL_TABLE_NAME}));;
+  }
+  dimension: Expected_label {type:string}
+  dimension: Predicted_0 {type: number}
+  dimension: Predicted_1 {type: number}
+}
+
 view: future_purchase_model_training_info {
   derived_table: {
     sql: SELECT  * FROM ml.TRAINING_INFO(MODEL ${future_purchase_model.SQL_TABLE_NAME});;
@@ -211,50 +140,64 @@ view: future_purchase_model_training_info {
     value_format_name: decimal_1
   }
 }
-########################################## PREDICT FUTURE ############################
-view: future_input {
+
+view: feature_importance {
   derived_table: {
-    explore_source: sessions {
-      column: sl_key {}
-      column: user_pseudo_id {}
-      column: session_attribution_medium {}
-      column: session_attribution_channel {}
-      column: device_is_mobile {}
-      column: geo_data_country {}
-      column: total_bounced_sessions {}
-      column: pageviews_total { field: events.total_page_views }
-      column: transactions_count { field: events.total_transactions }
-      column: total_first_visit_sessions {}
-      filters: {
-        field: sessions.session_date
-        value: "360 days"
-      }
-    }
+    sql: SELECT
+      *
+    FROM
+      ML.GLOBAL_EXPLAIN(MODEL ${future_purchase_model.SQL_TABLE_NAME});;
   }
+  dimension: feature {type:string}
+  dimension: attribution {type: number value_format_name: decimal_2}
 }
 
-
+########################################## PREDICT FUTURE ############################
+explore:  future_purchase_prediction {}
 view: future_purchase_prediction {
   derived_table: {
-    sql: SELECT * FROM ml.PREDICT(
+    sql: select
+          pred.*,
+          predicted_will_purchase_in_future_probs_unnest.prob as pred_probability from
+          (SELECT * FROM ml.PREDICT(
           MODEL ${future_purchase_model.SQL_TABLE_NAME},
-          (SELECT * FROM ${future_input.SQL_TABLE_NAME}));;
+          (SELECT * FROM ${future_input.SQL_TABLE_NAME}))) pred
+          left join unnest(pred.predicted_will_purchase_in_future_probs) as predicted_will_purchase_in_future_probs_unnest
+          where predicted_will_purchase_in_future_probs_unnest.label=1
+          ;;
   }
   dimension: predicted_will_purchase_in_future {type: number}
-  dimension: sl_key {type: number hidden:yes}
-  dimension: user_pseudo_id {type: number hidden: yes}
-  measure: max_predicted_score {
-    type: max
+  # dimension: sl_key {type: number hidden:yes}
+  # dimension: user_pseudo_id {type: number hidden: yes}
+  dimension: user_pseudo_id {type: number}
+  # dimension: prob {type: number hidden: yes}
+
+  dimension: pred_probability {
+    type: number
     value_format_name: percent_2
-    sql: ${predicted_will_purchase_in_future} ;;
+    sql: ${TABLE}.pred_probability ;;
+    drill_fields: [user_pseudo_id]
   }
-  measure: median_predicted_score {
-    type: median
-    sql: ${predicted_will_purchase_in_future} ;;
+
+  dimension: pred_probability_bucket {
+    case: {
+      when: {
+        sql: ${TABLE}.pred_probability <= 0.25;;
+        label: "Low"
+      }
+      when: {
+        sql: ${TABLE}.pred_probability > 0.25 AND ${TABLE}.pred_probability <= 0.75;;
+        label: "Medium"
+      }
+      when: {
+        sql: ${TABLE}.pred_probability > 0.75;;
+        label: "High"
+      }
+      else:"Unknown"
+    }
+    drill_fields: [user_pseudo_id]
   }
-  measure: average_predicted_score {
-    type: average
-    value_format_name: percent_2
-    sql: ${predicted_will_purchase_in_future} ;;
+  measure: count {
+    type: count
   }
 }
