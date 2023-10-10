@@ -156,6 +156,7 @@ view: feature_importance {
 explore:  future_purchase_prediction {}
 view: future_purchase_prediction {
   derived_table: {
+    datagroup_trigger: bqml_datagroup
     sql: select
           pred.*,
           predicted_will_purchase_in_future_probs_unnest.prob as pred_probability from
@@ -169,7 +170,7 @@ view: future_purchase_prediction {
   dimension: predicted_will_purchase_in_future {type: number}
   # dimension: sl_key {type: number hidden:yes}
   # dimension: user_pseudo_id {type: number hidden: yes}
-  dimension: user_pseudo_id {type: number}
+  dimension: user_pseudo_id {type: number primary_key: yes}
   # dimension: prob {type: number hidden: yes}
 
   dimension: pred_probability {
@@ -198,6 +199,7 @@ view: future_purchase_prediction {
     drill_fields: [user_pseudo_id]
   }
   measure: count {
+    label:"Person Count"
     type: count
   }
 }
