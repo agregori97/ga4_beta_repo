@@ -76,11 +76,11 @@ view: incremental_prediction {
     label: "Pred History Propensity to Purchase Pred Probability Bucket"
     description: ""
   }
-  dimension: total_purchase_revenue_usd {
+  measure: total_purchase_revenue_usd {
     label: "Pred History Events Purchase Revenue (USD)"
     description: ""
     value_format: "$#,##0.00"
-    type: number
+    type: sum
   }
   measure: count {
     label: "Pred History Propensity to Purchase Person Count"
