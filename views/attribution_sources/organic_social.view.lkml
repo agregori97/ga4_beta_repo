@@ -1,5 +1,6 @@
 view: organic_social {
   derived_table: {
+    datagroup_trigger:attribution_channel
     sql: select '43things' as channel,  'Organic Social' as source  UNION ALL
       select 'ameblo.jp' as channel,  'Organic Social' as source  UNION ALL
       select 'askubuntu.com' as channel,  'Organic Social' as source  UNION ALL

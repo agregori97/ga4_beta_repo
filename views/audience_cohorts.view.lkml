@@ -1,3 +1,4 @@
+include: "/views/attribution_sources.view.lkml"
 view: audience_cohorts {
   derived_table: {
     explore_source: sessions {

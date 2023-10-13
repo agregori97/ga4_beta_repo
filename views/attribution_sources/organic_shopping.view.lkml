@@ -1,5 +1,6 @@
 view: organic_shopping {
   derived_table: {
+    datagroup_trigger:attribution_channel
     sql: select 'Google Shopping' as channel,  'Organic Shopping'as source  UNION ALL
       select 'alibaba.com' as channel,  'Organic Shopping'as source  UNION ALL
       select 'cr.shopping.naver.com' as channel,  'Organic Shopping'as source  UNION ALL

@@ -47,8 +47,8 @@ explore: sessions {
   join: paid_shopping {
     fields: []
     sql_on: ${sessions.session_attribution_source}=${paid_shopping.channel}
-    or REGEXP_CONTAINS(${sessions.session_attribution_campaign}, r"^(.*(([^a-df-z]|^)shop|shopping).*)$") = true )
-       and REGEXP_CONTAINS(${sessions.session_attribution_medium}, r"^(.*cp.*|ppc|paid.*)$") = true;;
+    or REGEXP_CONTAINS(${sessions.session_attribution_campaign}, r"^(.*(([^a-df-z]|^)shop|shopping).*)$") = true
+    and REGEXP_CONTAINS(${sessions.session_attribution_medium}, r"^(.*cp.*|ppc|paid.*)$") = true;;
     relationship: many_to_one
   }
   join: paid_social {
@@ -61,7 +61,7 @@ explore: sessions {
   join: paid_video {
     fields: []
     sql_on: ${sessions.session_attribution_source}=${paid_video.channel} and
-    REGEXP_CONTAINS(${sessions.session_attribution_medium}, r"^(.*cp.*|ppc|paid.*)$") = tru;;
+    REGEXP_CONTAINS(${sessions.session_attribution_medium}, r"^(.*cp.*|ppc|paid.*)$") = true;;
     relationship: many_to_one
   }
   join: paid_search {
@@ -96,7 +96,7 @@ explore: sessions {
   }
   join: others {
     fields: []
-    sql_on: ${sessions.session_attribution_medium} LIKE ${others.medium};;
+    sql_on: ${sessions.session_attribution_medium} = ${others.medium};;
     relationship: many_to_one
   }
 
@@ -104,7 +104,7 @@ explore: sessions {
   join: attribution_sources {
     sql:  ;;
   relationship: one_to_one
-  view_label: "GA4 Sessions"
+    view_label: "Acquisition"
   }
 
 }

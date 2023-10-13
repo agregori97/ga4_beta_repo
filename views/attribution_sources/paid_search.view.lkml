@@ -1,5 +1,6 @@
 view: paid_search {
   derived_table: {
+    datagroup_trigger:attribution_channel
     sql: select '360.cn'as channel,  'Paid Search' as source UNION ALL
       select 'babylon'as channel,  'Paid Search' as source UNION ALL
       select 'centrum.cz'as channel,  'Paid Search' as source UNION ALL

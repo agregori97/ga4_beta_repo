@@ -1,6 +1,11 @@
 view: session_tags{
   derived_table:{
     datagroup_trigger: ga4_default_datagroup
+    partition_keys: ["sl_key"]
+    cluster_keys: ["sl_key"]
+    increment_key: "sl_key"
+    increment_offset: 3
+
     sql: select distinct sl.sl_key
       ,  first_value((select value.string_value from unnest(sl.event_params) where key = 'medium')) over (partition by sl.sl_key order by sl.event_timestamp desc) medium
       ,  first_value((select value.string_value from unnest(sl.event_params) where key = 'source')) over (partition by sl.sl_key order by sl.event_timestamp desc) source

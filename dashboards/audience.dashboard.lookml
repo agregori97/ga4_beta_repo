@@ -80,7 +80,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 8
@@ -152,7 +152,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 8
@@ -222,7 +222,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 8
@@ -303,7 +303,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 11
@@ -375,7 +375,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 11
@@ -445,7 +445,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 11
@@ -497,7 +497,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 21
@@ -552,7 +552,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 28
@@ -642,7 +642,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 42
@@ -742,7 +742,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 56
@@ -801,7 +801,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 42
@@ -866,7 +866,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 56
@@ -961,7 +961,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 66
@@ -1122,7 +1122,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
     row: 81
     col: 0
@@ -1248,7 +1248,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
       Country [Optional]: sessions.geo_data_country
       Continent [Optional]: sessions.geo_data_continent
     row: 81
@@ -1399,7 +1399,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 87
     col: 0
     width: 12
@@ -1547,7 +1547,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 87
     col: 12
     width: 12
@@ -1712,4 +1712,4 @@
     model: ga4_t
     explore: sessions
     listens_to_filters: []
-    field: sessions.session_attribution_channel
+    field: attribution_sources.attribution_source_channel

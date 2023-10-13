@@ -1,9 +1,7 @@
-#X# Conversion failed: failed to parse YAML.  Check for pipes on newlines
-
-
 view: paid_shopping
 {
   derived_table: {
+    datagroup_trigger:attribution_channel
     sql: select 'Google Shopping' as channel, 'Paid Channel' as source UNION ALL
       select 'IGShopping' as channel, 'Paid Channel' as source UNION ALL
       select 'aax-us-east.amazon-adsystem.com' as channel, 'Paid Channel' as source UNION ALL
@@ -51,11 +49,6 @@ view: paid_shopping
       select 'uk.shopping.net' as channel, 'Paid Channel' as source UNION ALL
       select 'walmart' as channel, 'Paid Channel' as source UNION ALL
       select 'walmart.com' as channel, 'Paid Channel' as source ;;
-  }
-
-  measure: count {
-    type: count
-    drill_fields: [detail*]
   }
 
   dimension: channel {

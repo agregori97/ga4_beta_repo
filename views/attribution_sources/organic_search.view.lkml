@@ -1,5 +1,6 @@
 view: organic_search {
   derived_table: {
+    datagroup_trigger:attribution_channel
     sql: select '360.cn' as channel,  'Organic Search'as source  UNION ALL
       select 'babylon' as channel,  'Organic Search'as source  UNION ALL
       select 'centrum.cz' as channel,  'Organic Search'as source  UNION ALL

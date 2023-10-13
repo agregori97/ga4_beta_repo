@@ -82,7 +82,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 8
     col: 0
     width: 8
@@ -154,7 +154,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 8
     col: 8
     width: 8
@@ -224,7 +224,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 8
     col: 16
     width: 8
@@ -305,7 +305,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 11
     col: 0
     width: 8
@@ -377,7 +377,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 11
     col: 8
     width: 8
@@ -447,7 +447,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 11
     col: 16
     width: 8
@@ -499,7 +499,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 21
     col: 0
     width: 24
@@ -554,7 +554,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 28
     col: 0
     width: 24
@@ -670,7 +670,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 38
     col: 0
     width: 24
@@ -743,7 +743,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 53
     col: 0
     width: 12
@@ -809,7 +809,7 @@
       Source [Optional]: sessions.session_attribution_source
       Source / Medium [Optional]: sessions.session_attribution_source_medium
       Medium [Optional]: sessions.session_attribution_medium
-      Channel [Optional]: sessions.session_attribution_channel
+      Channel [Optional]: attribution_sources.attribution_source_channel
     row: 53
     col: 12
     width: 12
@@ -971,4 +971,4 @@
     model: ga4_t
     explore: sessions
     listens_to_filters: []
-    field: sessions.session_attribution_channel
+    field: attribution_sources.attribution_source_channel

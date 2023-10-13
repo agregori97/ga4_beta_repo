@@ -1,5 +1,6 @@
 view: organic_video {
   derived_table: {
+    datagroup_trigger:attribution_channel
     sql: select 'blog.twitch.tv' as channel, 'Organic Video' as source UNION ALL
       select 'dailymotion.com' as channel, 'Organic Video' as source UNION ALL
       select 'help.netflix.com' as channel, 'Organic Video' as source UNION ALL

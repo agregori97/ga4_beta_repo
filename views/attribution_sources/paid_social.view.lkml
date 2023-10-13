@@ -1,5 +1,6 @@
 view: paid_social {
     derived_table: {
+      datagroup_trigger:attribution_channel
       sql: select '43things' as channel,  'Paid Social' as source  UNION ALL
               select 'ameblo.jp' as channel,  'Paid Social' as source  UNION ALL
               select 'askubuntu.com' as channel,  'Paid Social' as source  UNION ALL
