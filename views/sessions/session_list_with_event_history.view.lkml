@@ -3,7 +3,7 @@ include: "/views/event_data_dimensions/page_funnel.view"
 
 view: session_list_with_event_history {
   derived_table: {
-    datagroup_trigger: ga4_default_datagroup
+    datagroup_trigger: ga4_main_datagroup
     partition_keys: ["session_date"]
     cluster_keys: ["session_date"]
     increment_key: "session_date"
