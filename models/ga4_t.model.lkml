@@ -13,8 +13,8 @@ datagroup: ga4_main_datagroup {
 }
 
 datagroup: ga4_default_datagroup {
-  sql_trigger:  SELECT FLOOR(((TIMESTAMP_DIFF(CURRENT_TIMESTAMP(),'1970-01-01 00:00:00',SECOND)) - 60*60*6)/(60*60*24));;
-  max_cache_age: "2 hour"
+  sql_trigger: ${session_list_with_event_history.SQL_TABLE_NAME} ;;
+  max_cache_age: "3 hour"
 }
 
-persist_with: ga4_default_datagroup
+persist_with: ga4_main_datagroup
