@@ -1,3 +1,4 @@
+include: "/views/sessions/session_list_with_event_history.view.lkml"
 view: session_event_packing {
   derived_table:{
     datagroup_trigger: ga4_default_datagroup

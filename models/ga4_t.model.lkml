@@ -1,4 +1,5 @@
-connection: "@{GA4_CONNECTION}"
+connection: "agregori-connection"
+
 
 label: "Google Analytics 4 Beta"
 
