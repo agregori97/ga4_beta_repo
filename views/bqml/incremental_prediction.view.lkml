@@ -8,7 +8,7 @@ view: pred_history {
       column: total_purchase_revenue_usd { field: events.total_purchase_revenue_usd }
       column: count { field: future_purchase_prediction.count }
       derived_column: week {
-        sql:concat ("Week",cast(EXTRACT(WEEK FROM current_date()) as string));;
+        sql:DATE_TRUNC(current_date(), week);;
         }
       filters: {
         field: future_purchase_prediction.user_pseudo_id
@@ -38,7 +38,7 @@ view: pred_history {
   dimension: week {
     # label: "Week of PDT creation"
     description: "Week of PDT creation"
-    type: string
+    type: date
     # sql: concat("Week",cast(EXTRACT(WEEK FROM current_date()) as string)) ;;
   }
   # dimension: week_num {
@@ -59,7 +59,7 @@ view: incremental_prediction {
           pred_probability_bucket STRING,
           total_purchase_revenue_usd FLOAT64,
           count INT64,
-          week STRING
+          week DATE
         );;
       sql_step:
         Insert into ${SQL_TABLE_NAME}
@@ -71,54 +71,21 @@ view: incremental_prediction {
   }
   dimension: week {
     description: "Week of PDT creation"
+    type: date
   }
   dimension: pred_probability_bucket {
     label: "Pred History Propensity to Purchase Pred Probability Bucket"
-    description: ""
+    description: "Pred History Propensity to Purchase Pred Probability Bucket"
   }
   measure: total_purchase_revenue_usd {
     label: "Pred History Events Purchase Revenue (USD)"
-    description: ""
+    description: "Pred History Events Purchase Revenue (USD)"
     value_format: "$#,##0.00"
     type: sum
   }
   measure: count {
     label: "Pred History Propensity to Purchase Person Count"
-    description: ""
+    description: "Pred History Propensity to Purchase Person Count"
     type: sum
   }
 }
-
-
-# view: incremental_prediction {
-#   derived_table: {
-#     datagroup_trigger: bqml_datagroup
-#     increment_key: "week_num"
-#     increment_offset: 1
-#     explore_source: pred_history {
-#       column: week {}
-#       column: week_num {}
-#       column: pred_probability_bucket {}
-#       column: total_purchase_revenue_usd {}
-#       column: count {}
-#     }
-#   }
-#   dimension: week {
-#     description: "Week of PDT creation"
-#   }
-#   dimension: pred_probability_bucket {
-#     label: "Pred History Propensity to Purchase Pred Probability Bucket"
-#     description: ""
-#   }
-#   dimension: total_purchase_revenue_usd {
-#     label: "Pred History Events Purchase Revenue (USD)"
-#     description: ""
-#     value_format: "$#,##0.00"
-#     type: number
-#   }
-#   dimension: count {
-#     label: "Pred History Propensity to Purchase Person Count"
-#     description: ""
-#     type: number
-#   }
-# }
