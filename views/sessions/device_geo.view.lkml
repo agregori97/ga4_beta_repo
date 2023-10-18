@@ -2,10 +2,6 @@ include: "/views/sessions/session_list_with_event_history.view.lkml"
 view: device_geo{
   derived_table:{
     datagroup_trigger: ga4_default_datagroup
-    partition_keys: ["sl_key"]
-    cluster_keys: ["sl_key"]
-    increment_key: "sl_key"
-    increment_offset: 3
     sql:select sl.sl_key
       ,  sl.device.category device__category
       ,  sl.device.mobile_brand_name device__mobile_brand_name
