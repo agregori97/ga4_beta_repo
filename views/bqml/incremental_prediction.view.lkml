@@ -71,7 +71,7 @@ view: incremental_prediction {
   }
   dimension: week {
     description: "Week of PDT creation"
-    type: date
+    # type: date
   }
   dimension: pred_probability_bucket {
     label: "Pred History Propensity to Purchase Pred Probability Bucket"
