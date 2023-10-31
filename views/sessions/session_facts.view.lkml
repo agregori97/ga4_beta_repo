@@ -1,7 +1,7 @@
 include: "/views/sessions/session_list_with_event_history.view.lkml"
 view: session_facts{
   derived_table: {
-    datagroup_trigger: ga4_default_datagroup
+    sql_trigger_value:${session_list_with_event_history.SQL_TABLE_NAME};;
     sql: select sl.sl_key
       ,  COUNT(sl.event_timestamp) session_event_count
       ,  SUM(case when sl.event_name = 'page_view' then 1 else 0 end) session_page_view_count

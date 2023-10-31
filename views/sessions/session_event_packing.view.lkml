@@ -1,7 +1,7 @@
 include: "/views/sessions/session_list_with_event_history.view.lkml"
 view: session_event_packing {
   derived_table:{
-    datagroup_trigger: ga4_default_datagroup
+    sql_trigger_value:${session_list_with_event_history.SQL_TABLE_NAME};;
     partition_keys: ["session_date"]
     cluster_keys: ["session_date"]
     increment_key: "session_date"
