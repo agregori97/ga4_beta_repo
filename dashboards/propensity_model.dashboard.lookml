@@ -50,278 +50,26 @@
     col: 0
     width: 24
     height: 4
-  - title: Model Performance Metrics
-    name: Model Performance Metrics
-    model: ga4_t
-    explore: future_purchase_model_evaluation
-    type: looker_grid
-    fields: [future_purchase_model_evaluation.accuracy, future_purchase_model_evaluation.f1_score,
-      future_purchase_model_evaluation.recall, future_purchase_model_evaluation.log_loss,
-      future_purchase_model_evaluation.roc_auc]
-    sorts: [future_purchase_model_evaluation.accuracy]
-    limit: 500
-    column_limit: 50
-    show_view_names: false
-    show_row_numbers: true
-    transpose: false
-    truncate_text: true
-    hide_totals: false
-    hide_row_totals: false
-    size_to_fit: true
-    table_theme: white
-    limit_displayed_rows: false
-    enable_conditional_formatting: true
-    header_text_alignment: left
-    header_font_size: '12'
-    rows_font_size: '12'
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    color_application:
-      collection_id: legacy
-      palette_id: looker_classic
-    show_sql_query_menu_options: false
-    show_totals: true
-    show_row_totals: true
-    truncate_header: false
-    minimum_column_width: 75
-    series_text_format:
-      future_purchase_model_evaluation.accuracy:
-        bg_color: "#39ff1c"
-    conditional_formatting: [{type: along a scale..., value: !!null '', background_color: "#62bad4",
-        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging2,
-          options: {steps: 5}}, bold: false, italic: false, strikethrough: false,
-        fields: !!null ''}]
-    series_value_format:
-      future_purchase_model_evaluation.log_loss:
-        name: percent_3
-        decimals: '3'
-        format_string: "#,##0.000%"
-        label: Percent (3)
-        label_prefix: Percent
-      future_purchase_model_evaluation.roc_auc:
-        name: percent_3
-        decimals: '3'
-        format_string: "#,##0.000%"
-        label: Percent (3)
-        label_prefix: Percent
-    hidden_fields: []
-    hidden_points_if_no: []
-    theme: traditional
-    layout: fixed
-    minWidthForIndexColumns: true
-    showTooltip: false
-    showHighlight: false
-    columnOrder: {}
-    defaults_version: 1
-    y_axes: []
-    listen: {}
-    row: 26
-    col: 8
-    width: 14
-    height: 4
-  - title: Training Iterations
-    name: Training Iterations
-    model: ga4_t
-    explore: future_purchase_model_training_info
-    type: looker_grid
-    fields: [future_purchase_model_training_info.duration_ms, future_purchase_model_training_info.eval_loss,
-      future_purchase_model_training_info.iteration, future_purchase_model_training_info.learning_rate,
-      future_purchase_model_training_info.training_run]
-    sorts: [future_purchase_model_training_info.duration_ms]
-    limit: 500
-    column_limit: 50
-    show_view_names: false
-    show_row_numbers: true
-    transpose: false
-    truncate_text: true
-    hide_totals: false
-    hide_row_totals: false
-    size_to_fit: true
-    table_theme: white
-    limit_displayed_rows: false
-    enable_conditional_formatting: false
-    header_text_alignment: left
-    header_font_size: 12
-    rows_font_size: 12
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    defaults_version: 1
-    y_axes: []
-    listen: {}
-    row: 33
+  - name: " (4)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: "<div style=\"border: solid 1px #1A73E8; border-radius: 5px; padding:\
+    \ 3px 10px; background: #eaf1fe; text-align: center; margin-bottom: 10px;\"\
+    >\n\t<div>\n<nav style=\"font-size: 16px; position: absolute; bottom:\
+    \ 0; text-align: center;\">\n  <a style=\"padding: 5px; line-height: 40px;\"\
+    \ href=\"/dashboards-next/ga4_t::propensity_model\">\n<svg  style=\"height: 16px; fill: #4285F4;\" class=\"\
+    svg-icon\" viewBox=\"0 0 20 20\">\n<path d=\"M15.94,10.179l-2.437-0.325l1.62-7.379c0.047-0.235-0.132-0.458-0.372-0.458H5.25c-0.241,0-0.42,0.223-0.373,0.458l1.634,7.376L4.06,10.179c-0.312,0.041-0.446,0.425-0.214,0.649l2.864,2.759l-0.724,3.947c-0.058,0.315,0.277,0.554,0.559,0.401l3.457-1.916l3.456,1.916c-0.419-0.238,0.56,0.439,0.56-0.401l-0.725-3.947l2.863-2.759C16.388,10.604,16.254,10.22,15.94,10.179M10.381,2.778h3.902l-1.536,6.977L12.036,9.66l-1.655-3.546V2.778z\
+    \ M5.717,2.778h3.903v3.335L7.965,9.66L7.268,9.753L5.717,2.778zM12.618,13.182c-0.092,0.088-0.134,0.217-0.11,0.343l0.615,3.356l-2.938-1.629c-0.057-0.03-0.122-0.048-0.184-0.048c-0.063,0-0.128,0.018-0.185,0.048l-2.938,1.629l0.616-3.356c0.022-0.126-0.019-0.255-0.11-0.343l-2.441-2.354l3.329-0.441c0.128-0.017,0.24-0.099,0.295-0.215l1.435-3.073l1.435,3.073c0.055,0.116,0.167,0.198,0.294,0.215l3.329,0.441L12.618,13.182z\"\
+    ></path>\n</svg>\nModel Overview</a>\n<a style=\"padding: 5px; line-height: 40px;\"\
+    \ href=\"/dashboards-next/ga4_t::ga4_bqml_performance_metrics\">\n<svg  style=\"height: 16px; fill: #4285F4;\" class=\"\
+    svg-icon\" viewBox=\"0 0 20 20\">\n<path d=\"M15.94,10.179l-2.437-0.325l1.62-7.379c0.047-0.235-0.132-0.458-0.372-0.458H5.25c-0.241,0-0.42,0.223-0.373,0.458l1.634,7.376L4.06,10.179c-0.312,0.041-0.446,0.425-0.214,0.649l2.864,2.759l-0.724,3.947c-0.058,0.315,0.277,0.554,0.559,0.401l3.457-1.916l3.456,1.916c-0.419-0.238,0.56,0.439,0.56-0.401l-0.725-3.947l2.863-2.759C16.388,10.604,16.254,10.22,15.94,10.179M10.381,2.778h3.902l-1.536,6.977L12.036,9.66l-1.655-3.546V2.778z\
+    \ M5.717,2.778h3.903v3.335L7.965,9.66L7.268,9.753L5.717,2.778zM12.618,13.182c-0.092,0.088-0.134,0.217-0.11,0.343l0.615,3.356l-2.938-1.629c-0.057-0.03-0.122-0.048-0.184-0.048c-0.063,0-0.128,0.018-0.185,0.048l-2.938,1.629l0.616-3.356c0.022-0.126-0.019-0.255-0.11-0.343l-2.441-2.354l3.329-0.441c0.128-0.017,0.24-0.099,0.295-0.215l1.435-3.073l1.435,3.073c0.055,0.116,0.167,0.198,0.294,0.215l3.329,0.441L12.618,13.182z\"\
+    ></path>\n</svg>\nPerformance Metrics</a>\n</nav>\n</div>"
+    row: 0
     col: 0
-    width: 22
-    height: 4
-  - title: Confusion Matrix
-    name: Confusion Matrix
-    model: ga4_t
-    explore: confusion_matrix
-    type: marketplace_viz_report_table::report_table-marketplace
-    fields: [confusion_matrix.Expected_label, confusion_matrix.Predicted_0, confusion_matrix.Predicted_1]
-    sorts: [confusion_matrix.Expected_label]
-    limit: 500
-    column_limit: 50
-    dynamic_fields:
-    - args:
-      - confusion_matrix.Predicted_1
-      calculation_type: percent_of_column_sum
-      category: table_calculation
-      based_on: confusion_matrix.Predicted_1
-      label: Percent of Confusion Matrix Predicted 1
-      source_field: confusion_matrix.Predicted_1
-      table_calculation: percent_of_confusion_matrix_predicted_1
-      value_format:
-      value_format_name: percent_0
-      _kind_hint: dimension
-      _type_hint: number
-      is_disabled: true
-    hidden_fields: []
-    hidden_points_if_no: []
-    show_view_names: false
-    theme: traditional
-    customTheme: ''
-    layout: auto
-    minWidthForIndexColumns: true
-    headerFontSize: 12
-    bodyFontSize: 12
-    showTooltip: true
-    showHighlight: true
-    columnOrder: {}
-    rowSubtotals: false
-    colSubtotals: false
-    spanRows: true
-    spanCols: true
-    calculateOthers: true
-    sortColumnsBy: pivots
-    useViewName: false
-    useHeadings: false
-    useShortName: false
-    useUnit: false
-    groupVarianceColumns: false
-    genericLabelForSubtotals: false
-    indexColumn: false
-    transposeTable: false
-    label|confusion_matrix.Expected_label: Expected Label
-    heading|confusion_matrix.Expected_label: ''
-    hide|confusion_matrix.Expected_label: false
-    label|confusion_matrix.Predicted_0: Predicted 0
-    heading|confusion_matrix.Predicted_0: ''
-    hide|confusion_matrix.Predicted_0: false
-    label|confusion_matrix.Predicted_1: Predicted 1
-    heading|confusion_matrix.Predicted_1: ''
-    hide|confusion_matrix.Predicted_1: false
-    subtotalDepth: '1'
-    show_row_numbers: true
-    transpose: false
-    truncate_text: true
-    hide_totals: false
-    hide_row_totals: false
-    size_to_fit: true
-    table_theme: white
-    limit_displayed_rows: false
-    enable_conditional_formatting: false
-    header_text_alignment: left
-    header_font_size: 12
-    rows_font_size: 12
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    hidden_pivots: {}
-    defaults_version: 0
-    truncate_column_names: false
-    y_axes: []
-    listen: {}
-    row: 22
-    col: 8
-    width: 14
-    height: 4
-  - title: Feature Importance
-    name: Feature Importance
-    model: ga4_t
-    explore: feature_importance
-    type: looker_grid
-    fields: [feature_importance.feature, feature_importance.attribution]
-    sorts: [feature_importance.attribution desc]
-    limit: 500
-    column_limit: 50
-    query_timezone: America/Ciudad_Juarez
-    show_view_names: false
-    show_row_numbers: true
-    transpose: false
-    truncate_text: true
-    hide_totals: false
-    hide_row_totals: false
-    size_to_fit: true
-    table_theme: white
-    limit_displayed_rows: false
-    enable_conditional_formatting: true
-    header_text_alignment: left
-    header_font_size: '12'
-    rows_font_size: '12'
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    color_application:
-      collection_id: legacy
-      palette_id: looker_classic
-    show_sql_query_menu_options: false
-    show_totals: true
-    show_row_totals: true
-    truncate_header: false
-    minimum_column_width: 75
-    conditional_formatting: [{type: along a scale..., value: !!null '', background_color: "#62bad4",
-        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging2,
-          options: {steps: 5, reverse: false}}, bold: false, italic: false, strikethrough: false,
-        fields: !!null ''}]
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: true
-    y_axis_reversed: false
-    plot_size_by_field: false
-    x_axis_zoom: true
-    y_axis_zoom: true
-    trellis: ''
-    stacking: normal
-    legend_position: center
-    point_style: none
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    defaults_version: 1
-    hidden_fields: []
-    hidden_points_if_no: []
-    leftAxisLabelVisible: false
-    leftAxisLabel: ''
-    rightAxisLabelVisible: false
-    rightAxisLabel: ''
-    smoothedBars: false
-    orientation: automatic
-    labelPosition: left
-    percentType: total
-    percentPosition: inline
-    valuePosition: right
-    labelColorEnabled: false
-    labelColor: "#FFF"
-    up_color: false
-    down_color: false
-    total_color: false
-    y_axes: []
-    listen: {}
-    row: 22
-    col: 0
-    width: 8
-    height: 11
+    width: 9
+    height: 2
   - type: button
     name: button_984
     rich_content_json: '{"text":"Go to top","description":"This button is for redirecting
@@ -444,16 +192,6 @@
     col: 0
     width: 22
     height: 4
-  - name: " (Copy)"
-    type: text
-    title_text: " (Copy)"
-    subtitle_text: ''
-    body_text: '[{"type":"h1","children":[{"text":"Propensity Model Details"}],"align":"center"}]'
-    rich_content_json: '{"format":"slate"}'
-    row: 20
-    col: 0
-    width: 22
-    height: 2
   - title: Low Prob user_ids
     name: Low Prob user_ids
     model: ga4_t
