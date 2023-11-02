@@ -3,7 +3,7 @@ project_name: "test_ga4_beta"
 ## Connection Constants:
 constant: GA4_CONNECTION {
   value: "agregori-connection"
-  export: override_optional
+  export: override_required
 }
 
 constant: GA4_SCHEMA {
