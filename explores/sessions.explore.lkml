@@ -30,6 +30,11 @@ explore: sessions {
     sql_on: ${sessions.sl_key} = ${user_previous_session.sl_key} ;;
     relationship: one_to_one
   }
+  join: user_first_session {
+    view_label: "GA4 Sessions"
+    sql_on: ${sessions.sl_key} = ${user_first_session.sl_key} ;;
+    relationship: one_to_one
+  }
 
   join: user_segment {
     type: left_outer
