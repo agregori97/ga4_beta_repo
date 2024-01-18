@@ -9,7 +9,7 @@ include: "/views/**/*.view.lkml"
 
 datagroup: ga4_main_datagroup {
   sql_trigger:  SELECT CURDATE();;
-  max_cache_age: "2 hours"
+  max_cache_age: "1 hour"
 }
 
 datagroup: ga4_default_datagroup {
