@@ -8,7 +8,7 @@ include: "/explores/*.explore.lkml"
 include: "/views/**/*.view.lkml"
 
 datagroup: ga4_main_datagroup {
-  sql_trigger:  SELECT CURDATE();;
+  sql_trigger:  SELECT CURRENT_DATE();;
   max_cache_age: "1 hour"
 }
 
