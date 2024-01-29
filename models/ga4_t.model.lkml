@@ -17,7 +17,7 @@ datagroup: ga4_default_datagroup {
   max_cache_age: "3 hour"
 }
 
-datagroup: ga4_attribution_group {
+datagroup: ga4_attribution_channel {
   sql_trigger: SELECT 1 ;;
 }
 
