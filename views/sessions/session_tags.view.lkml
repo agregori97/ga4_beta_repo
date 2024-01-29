@@ -1,7 +1,7 @@
 include: "/views/sessions/session_list_with_event_history.view.lkml"
 view: session_tags{
   derived_table:{
-    sql_trigger_value:${session_list_with_event_history.SQL_TABLE_NAME};;
+    datagroup_trigger: ga4_default_datagroup
     sql: select distinct sl.sl_key
       ,  first_value((select value.string_value from unnest(sl.event_params) where key = 'medium')) over (partition by sl.sl_key order by sl.event_timestamp desc) medium
       ,  first_value((select value.string_value from unnest(sl.event_params) where key = 'source')) over (partition by sl.sl_key order by sl.event_timestamp desc) source
