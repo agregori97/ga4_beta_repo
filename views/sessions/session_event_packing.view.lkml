@@ -40,7 +40,7 @@ view: session_event_packing {
                           , sl.ecommerce
                           , sl.items)) event_data
     from ${session_list_with_event_history.SQL_TABLE_NAME} AS sl
-    WHERE sl.sl_key IN (SELECT sl_key FROM ${session_facts.SQL_TABLE_NAME} WHERE session_event_count <SAFE_CAST(`@{EVENT_COUNT}`AS INT64))
+    WHERE sl.sl_key IN (SELECT sl_key FROM ${session_facts.SQL_TABLE_NAME} WHERE session_event_count <SAFE_CAST(@{EVENT_COUNT}AS INT64))
   group by 1,2,3,4,5;;
   }
 }
