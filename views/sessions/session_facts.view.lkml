@@ -1,4 +1,4 @@
-include: "/views/sessions/session_list_with_event_history.view.lkml"
+include: "/views/sessions/*.view.lkml"
 view: session_facts{
   derived_table: {
    datagroup_trigger: ga4_main_datagroup
@@ -13,7 +13,7 @@ view: session_facts{
             , MAX(TIMESTAMP_MICROS(sl.event_timestamp)) as session_end
             , MIN(TIMESTAMP_MICROS(sl.event_timestamp)) as session_start
             , (MAX(sl.event_timestamp) - MIN(sl.event_timestamp))/(60 * 1000 * 1000) AS session_length_minutes
-              from ${session_list_with_event_history.SQL_TABLE_NAME} AS sl
+              from ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
   group by 1;;
   }
 }

@@ -1,4 +1,4 @@
-include: "/views/sessions/session_list_with_event_history.view.lkml"
+include: "/views/sessions/*.view.lkml"
 view: session_event_packing {
   derived_table:{
     datagroup_trigger: ga4_default_datagroup
@@ -39,7 +39,7 @@ view: session_event_packing {
                           , sl.event_dimensions
                           , sl.ecommerce
                           , sl.items)) event_data
-    from ${session_list_with_event_history.SQL_TABLE_NAME} AS sl
+    from ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
     WHERE sl.sl_key IN (SELECT sl_key FROM ${session_facts.SQL_TABLE_NAME} as sf WHERE session_event_count <SAFE_CAST( @{EVENT_COUNT} AS INT64))
   group by 1,2,3,4,5;;
   }
