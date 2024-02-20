@@ -112,7 +112,7 @@ explore: sessions {
   }
   join: forecasting {
     type: full_outer
-    sql_on: ${events.event_timestamp}=${forecasting.forecast_timestamp} ;;
+    sql_on: ${events.event_time_date}=${forecasting.forecast_timestamp} ;;
     relationship: one_to_one
     view_label: "ARIMA"
   }
