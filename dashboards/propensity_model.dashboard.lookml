@@ -288,19 +288,18 @@
     col: 0
     width: 8
     height: 2
-  - title: Rolling 90 day Person Count by Predicted Bucket Across Weeks
-    name: Rolling 90 day Person Count by Predicted Bucket Across Weeks
+  - name: roll90count
+    title: Rolling 90 day Person Count by Predicted Bucket Across Weeks
     model: ga4_t
     explore: incremental_prediction
     type: looker_line
     fields: [incremental_prediction.week, incremental_prediction.pred_probability_bucket,
-      incremental_prediction.count]
+    incremental_prediction.count]
     pivots: [incremental_prediction.pred_probability_bucket]
-    sorts: [incremental_prediction.pred_probability_bucket, incremental_prediction.week,
-      incremental_prediction.count desc 0]
+    sorts: [incremental_prediction.pred_probability_bucket, incremental_prediction.count
+      0]
     limit: 500
     column_limit: 50
-    query_timezone: America/Ciudad_Juarez
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -326,26 +325,25 @@
     show_null_points: true
     interpolation: linear
     color_application:
-      collection_id: test
-      custom:
-        id: c28209c2-d983-51aa-8c75-9d2ec0df1d2a
-        label: Custom
-        type: discrete
-        colors:
-        - "#F9AB00"
-        - "#B31412"
-        - "#1A73E8"
-      options:
-        steps: 5
-    y_axes: [{label: Person Count, orientation: left, series: [{axisId: incremental_prediction.count,
-            id: High - incremental_prediction.count, name: High}, {axisId: incremental_prediction.count,
-            id: Low - incremental_prediction.count, name: Low}, {axisId: incremental_prediction.count,
-            id: Medium - incremental_prediction.count, name: Medium}], showLabels: true,
-        showValues: true, unpinAxis: false, tickDensity: default, tickDensityCustom: 5,
-        type: linear}]
+    collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+    palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+    options:
+      steps: 5
+      __FILE: ga_four_beta/dashboards/propensity_model.dashboard.lookml
+      __LINE_NUM: 339
+      y_axes: [{label: Person Count, orientation: left, series: [{axisId: incremental_prediction.count,
+          id: High - incremental_prediction.count, name: High, __FILE: ga_four_beta/dashboards/propensity_model.dashboard.lookml,
+          __LINE_NUM: 340}, {axisId: incremental_prediction.count, id: Low - incremental_prediction.count,
+          name: Low, __FILE: ga_four_beta/dashboards/propensity_model.dashboard.lookml,
+          __LINE_NUM: 341}, {axisId: incremental_prediction.count, id: Medium - incremental_prediction.count,
+          name: Medium, __FILE: ga_four_beta/dashboards/propensity_model.dashboard.lookml,
+          __LINE_NUM: 342}], showLabels: true, showValues: true, unpinAxis: false,
+      tickDensity: default, tickDensityCustom: 5, type: linear, __FILE: ga_four_beta/dashboards/propensity_model.dashboard.lookml,
+      __LINE_NUM: 340}]
     x_axis_zoom: true
     y_axis_zoom: true
     hide_legend: false
+    series_colors: {}
     swap_axes: false
     ordering: none
     show_null_labels: false
@@ -356,11 +354,6 @@
     hidden_fields: []
     hidden_points_if_no: []
     hidden_pivots: {}
-    listen: {}
-    row: 8
-    col: 0
-    width: 22
-    height: 6
   - title: Rolling 90 day Revenue (USD) by Predicted Bucket Across Weeks
     name: Rolling 90 day Revenue (USD) by Predicted Bucket Across Weeks
     model: ga4_t
