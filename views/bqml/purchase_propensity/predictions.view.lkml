@@ -180,47 +180,47 @@ view: future_purchase_prediction {
   dimension: pred_prob_perc_10 {
     type: number
     hidden: yes
-    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(10)] ;;
+    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(10)] ;;
   }
   dimension: pred_prob_perc_20 {
     type: number
     hidden: yes
-    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(20)] ;;
+    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(20)] ;;
   }
   dimension: pred_prob_perc_30 {
     type: number
     hidden: yes
-    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(30)];;
+    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(30)];;
   }
   dimension: pred_prob_perc_40 {
     type: number
     hidden: yes
-    sql:APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(40)];;
+    sql:APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(40)];;
   }
   dimension: pred_prob_perc_50 {
     type: number
     hidden: yes
-    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(50)] ;;
+    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(50)] ;;
   }
   dimension: pred_prob_perc_60 {
     type: number
     hidden: yes
-    sql:APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(60)] ;;
+    sql:APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(60)] ;;
   }
   dimension: pred_prob_perc_70 {
     type: number
     hidden: yes
-    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(70)] ;;
+    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(70)] ;;
   }
   dimension: pred_prob_perc_80 {
     type: number
     hidden: yes
-    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(80)];;
+    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(80)];;
   }
   dimension: pred_prob_perc_90 {
     type: number
     hidden: yes
-    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(90)] ;;
+    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(90)] ;;
   }
 
   dimension: pred_probability_bucket {
