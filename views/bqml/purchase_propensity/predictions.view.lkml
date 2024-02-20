@@ -228,45 +228,10 @@ view: future_purchase_prediction {
   }
 
   dimension: pred_probability_bucket {
-    case: {
-      when: {
-        sql: ${TABLE}.pred_probability < ${pred_prob_perc_10};;
-        label: "D1"
-      }
-      when: {
-        sql: ${TABLE}.pred_probability < ${pred_prob_perc_20};;
-        label: "D2"
-      }
-      when: {
-        sql: ${TABLE}.pred_probability < ${pred_prob_perc_30};;
-        label: "D3"
-      }
-      when: {
-        sql: ${TABLE}.pred_probability < ${pred_prob_perc_40};;
-        label: "D4"
-      }
-      when: {
-        sql: ${TABLE}.pred_probability < ${pred_prob_perc_50};;
-        label: "D5"
-      }
-      when: {
-        sql: ${TABLE}.pred_probability < ${pred_prob_perc_60};;
-        label: "D6"
-      }
-      when: {
-        sql: ${TABLE}.pred_probability < ${pred_prob_perc_70};;
-        label: "D7"
-      }
-      when: {
-        sql: ${TABLE}.pred_probability < ${pred_prob_perc_80};;
-        label: "D8"
-      }
-      when: {
-        sql: ${TABLE}.pred_probability < ${pred_prob_perc_90};;
-        label: "D9"
-      }
-      else:"D10"
-    }
+    type: tier
+    tiers: [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
+    style: relational
+    sql: ${pred_probability} ;;
     drill_fields: [user_pseudo_id]
   }
   measure: count {
