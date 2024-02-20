@@ -19,6 +19,10 @@ constant: EVENT_COUNT {
   value: "5000"
   export: override_optional
 }
+constant: model_step_prediction {
+  value: "60"
+  #export: override_optional
+}
 
 constant: GA4_BQML_train_months {
   value: "12"

@@ -1,5 +1,6 @@
 include: "/views/*.view.lkml"
 include: "/views/*/*.view.lkml"
+include: "/views/*/*/*.view.lkml"
 include: "/attributes/*.lkml"
 
 explore: sessions {
@@ -104,12 +105,16 @@ explore: sessions {
     sql_on: ${sessions.session_attribution_medium} = ${others.medium};;
     relationship: many_to_one
   }
-
-
   join: attribution_sources {
     sql:  ;;
   relationship: one_to_one
     view_label: "Acquisition"
+  }
+  join: forecasting {
+    type: full_outer
+    sql_on: ${events.event_timestamp}=${forecasting.forecast_timestamp} ;;
+    relationship: one_to_one
+    view_label: "ARIMA"
   }
 
 }

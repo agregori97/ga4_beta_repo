@@ -9,9 +9,10 @@
 ##   - event_path
 
 include: "event_data_dimensions/*.view"
+include: "bqml/arima_event_model/*.view"
 
 view: events {
-  extends: [event_data_event_params, event_data_user_properties, goals, page_data, event_path]
+  extends: [event_data_event_params, event_data_user_properties, goals, page_data, event_path,train_data_arima]
 
 ## Dimensions
 
@@ -53,10 +54,21 @@ view: events {
 
   dimension_group: event_time {
     type: time
-    timeframes: [date,day_of_month,day_of_week,day_of_week_index,day_of_year,month,month_name,month_num,fiscal_quarter,fiscal_quarter_of_year,year,time,hour,hour_of_day]
+    timeframes: [date,day_of_month,day_of_week,day_of_week_index,day_of_year,month,month_name,month_num,fiscal_quarter,fiscal_quarter_of_year,year,time,hour,hour_of_day,minute,second]
     label: "Event"
     sql: TIMESTAMP_MICROS(${TABLE}.event_timestamp) ;;
     description: "Event Date/Time from Event Timestamp."
+  }
+  parameter: event_time_window {
+    allowed_value: {
+      label: "Hourly window"
+      value: "hour"
+    }
+    allowed_value: {
+      label: "Minute window"
+      value: "minute"
+    }
+    default_value: "Daily"
   }
 
   dimension: event_timestamp { hidden: yes sql: ${TABLE}.event_timestamp ;; }

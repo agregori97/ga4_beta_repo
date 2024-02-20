@@ -1,7 +1,5 @@
 ######################## TRAINING/TESTING INPUTS #############################
-include: "/views/bqml/future_input.view"
-include: "/views/bqml/training_input.view"
-include: "/views/bqml/testing_input.view"
+include: "/views/bqml/purchase_propensity/*.view"
 
 ######################## MODEL #############################
 
@@ -179,22 +177,91 @@ view: future_purchase_prediction {
     sql: ${TABLE}.pred_probability ;;
     drill_fields: [user_pseudo_id]
   }
+  dimension: pred_prob_perc_10 {
+    type: number
+    hidden: yes
+    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(10)] ;;
+  }
+  dimension: pred_prob_perc_20 {
+    type: number
+    hidden: yes
+    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(20)] ;;
+  }
+  dimension: pred_prob_perc_30 {
+    type: number
+    hidden: yes
+    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(30)];;
+  }
+  dimension: pred_prob_perc_40 {
+    type: number
+    hidden: yes
+    sql:APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(40)];;
+  }
+  dimension: pred_prob_perc_50 {
+    type: number
+    hidden: yes
+    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(50)] ;;
+  }
+  dimension: pred_prob_perc_60 {
+    type: number
+    hidden: yes
+    sql:APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(60)] ;;
+  }
+  dimension: pred_prob_perc_70 {
+    type: number
+    hidden: yes
+    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(70)] ;;
+  }
+  dimension: pred_prob_perc_80 {
+    type: number
+    hidden: yes
+    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(80)];;
+  }
+  dimension: pred_prob_perc_90 {
+    type: number
+    hidden: yes
+    sql: APROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(90)] ;;
+  }
 
   dimension: pred_probability_bucket {
     case: {
       when: {
-        sql: ${TABLE}.pred_probability <= 0.25;;
-        label: "Low"
+        sql: ${TABLE}.pred_probability < ${pred_prob_perc_10};;
+        label: "D1"
       }
       when: {
-        sql: ${TABLE}.pred_probability > 0.25 AND ${TABLE}.pred_probability <= 0.75;;
-        label: "Medium"
+        sql: ${TABLE}.pred_probability < ${pred_prob_perc_20};;
+        label: "D2"
       }
       when: {
-        sql: ${TABLE}.pred_probability > 0.75;;
-        label: "High"
+        sql: ${TABLE}.pred_probability < ${pred_prob_perc_30};;
+        label: "D3"
       }
-      else:"Unknown"
+      when: {
+        sql: ${TABLE}.pred_probability < ${pred_prob_perc_40};;
+        label: "D4"
+      }
+      when: {
+        sql: ${TABLE}.pred_probability < ${pred_prob_perc_50};;
+        label: "D5"
+      }
+      when: {
+        sql: ${TABLE}.pred_probability < ${pred_prob_perc_60};;
+        label: "D6"
+      }
+      when: {
+        sql: ${TABLE}.pred_probability < ${pred_prob_perc_70};;
+        label: "D7"
+      }
+      when: {
+        sql: ${TABLE}.pred_probability < ${pred_prob_perc_80};;
+        label: "D8"
+      }
+      when: {
+        sql: ${TABLE}.pred_probability < ${pred_prob_perc_90};;
+        label: "D9"
+      }
+      else:"D10"
     }
     drill_fields: [user_pseudo_id]
   }
