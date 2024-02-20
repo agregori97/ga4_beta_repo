@@ -230,7 +230,7 @@ view: future_purchase_prediction {
   dimension: pred_probability_bucket {
     type: tier
     tiers: [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
-    style: interval
+    style: relational
     sql: ${pred_probability} ;;
     drill_fields: [user_pseudo_id]
   }
