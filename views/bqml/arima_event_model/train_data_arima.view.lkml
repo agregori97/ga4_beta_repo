@@ -42,11 +42,11 @@ view: train_data_arima {
       sql: SELECT * FROM ML.FORECAST(MODEL ${train_data_arima.SQL_TABLE_NAME},
              STRUCT(SAFE_CAST(@{model_step_prediction} AS INT64) AS horizon, 0.8 AS confidence_level)) ;;
     }
-    dimension: forecast_timestamp {type:date_time sql:${TABLE}.forecast_timestamp ;;}
-    dimension: forecast_value {type:number sql:${TABLE}.forecast_value;;}
-    dimension: standard_error {type:number sql:${TABLE}.standard_error;;}
-    dimension: prediction_interval_lower_bound {type:number sql:${TABLE}.prediction_interval_lower_bound;;}
-    dimension: prediction_interval_upper_bound {type:number sql: ${TABLE}.prediction_interval_upper_bound;;}
+    dimension: forecast_timestamp {type:date_time sql:${TABLE}.forecast_timestamp ;; primary_key:yes}
+    measure: forecast_value {type:sum sql:${TABLE}.forecast_value;;}
+    measure: standard_error {type:sum sql:${TABLE}.standard_error;;}
+    measure: prediction_interval_lower_bound {type:sum sql:${TABLE}.prediction_interval_lower_bound;;}
+    measure: prediction_interval_upper_bound {type:sum sql: ${TABLE}.prediction_interval_upper_bound;;}
   }
   view: model_evaluation {
     derived_table: {
