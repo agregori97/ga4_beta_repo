@@ -199,7 +199,7 @@
     type: single_value
     fields: [future_purchase_prediction.count]
     filters:
-      future_purchase_prediction.pred_probability_bucket: Low
+      future_purchase_prediction.pred_probability_bucket: "< 0.1,>= 0.1 and < 0.2,>= 0.2 and < 0.3"
       events.total_purchase_revenue_usd: NOT NULL
     limit: 500
     column_limit: 50
@@ -212,7 +212,7 @@
     enable_conditional_formatting: true
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Low
+    single_value_title: 2nd Decile
     conditional_formatting: [{type: not null, value: !!null '', background_color: "#B31412",
         font_color: !!null '', color_application: {collection_id: test, palette_id: test-sequential-0},
         bold: false, italic: false, strikethrough: false, fields: !!null ''}]
@@ -231,7 +231,7 @@
     type: single_value
     fields: [future_purchase_prediction.count]
     filters:
-      future_purchase_prediction.pred_probability_bucket: Medium
+      future_purchase_prediction.pred_probability_bucket: ">= 0.3 and < 0.4,>= 0.4 and < 0.5,>= 0.5 and < 0.6,>= 0.6 and < 0.7"
       events.total_purchase_revenue_usd: NOT NULL
     limit: 500
     column_limit: 50
@@ -244,7 +244,7 @@
     enable_conditional_formatting: true
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Medium
+    single_value_title: 5th Decile
     conditional_formatting: [{type: not null, value: !!null '', background_color: "#1A73E8",
         font_color: !!null '', color_application: {collection_id: test, palette_id: test-sequential-0},
         bold: false, italic: false, strikethrough: false, fields: !!null ''}]
@@ -263,7 +263,7 @@
     type: single_value
     fields: [future_purchase_prediction.count]
     filters:
-      future_purchase_prediction.pred_probability_bucket: High
+      future_purchase_prediction.pred_probability_bucket: ">= 0.7 and < 0.8,>= 0.8 and < 0.9,>= 0.9"
       events.total_purchase_revenue_usd: NOT NULL
     limit: 500
     column_limit: 50
@@ -277,7 +277,7 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     custom_color: "#fcf9ff"
-    single_value_title: High
+    single_value_title: 7th Decile
     conditional_formatting: [{type: not null, value: !!null '', background_color: "#F9AB00",
         font_color: "#ffff", color_application: {collection_id: test, palette_id: test-sequential-0},
         bold: false, italic: false, strikethrough: false, fields: !!null ''}]
