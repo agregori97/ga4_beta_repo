@@ -10,7 +10,8 @@ view: train_data_arima {
         time_series_data_col='ev_count',
         auto_arima=true) AS
     SELECT session_date
-        AS ts, (SELECT COUNT(event_name) FROM UNNEST(event_data)) as ev_count FROM ${sessions.SQL_TABLE_NAME} WHERE event_rank=1 GROUP BY 1
+        AS ts, (SELECT COUNT(event_name) FROM UNNEST(event_data)) as ev_count FROM ${sessions.SQL_TABLE_NAME}
+        WHERE 1=1 GROUP BY 1
       ;;
   }
   dimension: ts {
