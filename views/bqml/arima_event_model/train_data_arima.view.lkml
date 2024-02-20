@@ -27,7 +27,7 @@ view: train_data_arima {
   #explore: train_data_arima {fields:[ts,ev_count]}
   #explore: model_evaluation {}
   #explore: optimal_model_coeff {}
-  explore: forecasting {}
+  #explore: forecasting {}
   view: optimal_model_coeff{
     derived_table: {
       sql: SELECT * FROM ML.ARIMA_COEFFICIENTS(MODEL ${train_data_arima.SQL_TABLE_NAME});;
@@ -42,7 +42,7 @@ view: train_data_arima {
       sql: SELECT * FROM ML.FORECAST(MODEL ${train_data_arima.SQL_TABLE_NAME},
              STRUCT(SAFE_CAST(@{model_step_prediction} AS INT64) AS horizon, 0.8 AS confidence_level)) ;;
     }
-    dimension: forecast_timestamp {type:date_time sql:${TABLE}.forecast_timestamp ;; primary_key:yes}
+    dimension: forecast_timestamp {type:date_time sql:${TABLE}.forecast_timestamp ;;}
     measure: forecast_value {type:sum sql:${TABLE}.forecast_value;;}
     measure: standard_error {type:sum sql:${TABLE}.standard_error;;}
     measure: prediction_interval_lower_bound {type:sum sql:${TABLE}.prediction_interval_lower_bound;;}
