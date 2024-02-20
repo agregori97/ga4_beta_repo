@@ -177,50 +177,54 @@ view: future_purchase_prediction {
     sql: ${TABLE}.pred_probability ;;
     drill_fields: [user_pseudo_id]
   }
+  dimension: pred_prob_perc {
+    type: number
+    sql:APPROX_QUANTILES(${TABLE}.pred_probability,100);;
+  }
   dimension: pred_prob_perc_10 {
     type: number
     hidden: yes
-    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(10)] ;;
+    sql: ${pred_prob_perc}[OFFSET(10)] ;;
   }
   dimension: pred_prob_perc_20 {
     type: number
     hidden: yes
-    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(20)] ;;
+    sql: ${pred_prob_perc}[OFFSET(20)] ;;
   }
   dimension: pred_prob_perc_30 {
     type: number
     hidden: yes
-    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(30)];;
+    sql: ${pred_prob_perc}[OFFSET(30)];;
   }
   dimension: pred_prob_perc_40 {
     type: number
     hidden: yes
-    sql:APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(40)];;
+    sql:${pred_prob_perc}[OFFSET(40)];;
   }
   dimension: pred_prob_perc_50 {
     type: number
     hidden: yes
-    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(50)] ;;
+    sql: ${pred_prob_perc}[OFFSET(50)] ;;
   }
   dimension: pred_prob_perc_60 {
     type: number
     hidden: yes
-    sql:APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(60)] ;;
+    sql:${pred_prob_perc}[OFFSET(60)] ;;
   }
   dimension: pred_prob_perc_70 {
     type: number
     hidden: yes
-    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(70)] ;;
+    sql: ${pred_prob_perc}[OFFSET(70)] ;;
   }
   dimension: pred_prob_perc_80 {
     type: number
     hidden: yes
-    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(80)];;
+    sql: ${pred_prob_perc}[OFFSET(80)];;
   }
   dimension: pred_prob_perc_90 {
     type: number
     hidden: yes
-    sql: APPROX_QUANTILES(${TABLE}.pred_probability,100)[OFFSET(90)] ;;
+    sql: ${pred_prob_perc}[OFFSET(90)] ;;
   }
 
   dimension: pred_probability_bucket {
