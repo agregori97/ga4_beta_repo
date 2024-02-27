@@ -4,10 +4,7 @@ include: "/views/event_data_dimensions/page_funnel.view"
 view: session_list_with_event_history {
   derived_table: {
     datagroup_trigger: ga4_main_datagroup
-    partition_keys: ["session_date"]
-    cluster_keys: ["session_date"]
-    increment_key: "session_date"
-    increment_offset: 7
+
     sql:-- obtains a list of sessions, uniquely identified by the table date, ga_session_id event parameter, ga_session_number event parameter, and the user_pseudo_id.
     /* select timestamp(SAFE.PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'[0-9]+'))) session_date
       ,  (select value.int_value from UNNEST(events.event_params) where key = "ga_session_id") ga_session_id
