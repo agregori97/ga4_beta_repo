@@ -1,7 +1,6 @@
-include: "/views/sessions/*.view.lkml"
-
+include: "/views/sessions/session_list_with_event_history.view.lkml"
 view: session_event_packing {
-  derived_table: {
+  derived_table:{
     datagroup_trigger: ga4_default_datagroup
     partition_keys: ["session_date"]
     cluster_keys: ["session_date"]
@@ -44,8 +43,7 @@ view: session_event_packing {
     WHERE sl.sl_key IN (SELECT sl_key FROM ${session_facts.SQL_TABLE_NAME} WHERE session_event_count <SAFE_CAST( @{EVENT_COUNT} AS INT64))
   group by 1,2,3,4,5;;
   }
-
-  dimension: session_date {
+  dimension: session_date{
     type: date
     hidden: yes
   }
