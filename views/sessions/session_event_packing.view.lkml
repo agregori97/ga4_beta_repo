@@ -7,7 +7,7 @@ view: session_event_packing {
     cluster_keys: ["session_date"]
     increment_key: "session_date"
     increment_offset: 10
-    sql:select sl.session_date as session_date
+    sql:select sl.session_date session_date
         , sl.ga_session_id ga_session_id
         , sl.ga_session_number ga_session_number
         , sl.user_pseudo_id user_pseudo_id
@@ -40,12 +40,12 @@ view: session_event_packing {
           , sl.event_dimensions
           , sl.ecommerce
           , sl.items)) event_data
-    from ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
+    FROM ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
     WHERE sl.sl_key IN (
     SELECT sl_key
-    FROM ${session_facts.SQL_TABLE_NAME} as sf
+    FROM ${session_facts.SQL_TABLE_NAME} AS sf
     WHERE IF(@{EVENT_COUNT} NOT NULL, session_event_count < SAFE_CAST( @{EVENT_COUNT} AS INT64), TRUE))
-    group by 1, 2, 3, 4, 5;;
+    GROUP BY 1, 2, 3, 4, 5;;
   }
 
   dimension: session_date {
