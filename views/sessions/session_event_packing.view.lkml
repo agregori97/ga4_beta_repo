@@ -10,7 +10,7 @@ view: session_event_packing {
       ,  sl.ga_session_id ga_session_id
       ,  sl.ga_session_number ga_session_number
       ,  sl.user_pseudo_id user_pseudo_id
-      ,  sl.sl_key
+      ,  sl.sl_key as sl_key
       ,  ARRAY_AGG(STRUCT(sl.sl_key
                           , sl.event_rank
                           , sl.page_view_rank
@@ -40,7 +40,7 @@ view: session_event_packing {
                           , sl.ecommerce
                           , sl.items)) event_data
     from ${session_list_with_event_history.SQL_TABLE_NAME} AS sl
-    WHERE sl.sl_key IN (SELECT sl_key FROM ${session_facts.SQL_TABLE_NAME})-- WHERE session_event_count <SAFE_CAST( @{EVENT_COUNT} AS INT64))
+    WHERE sl_key IN (SELECT sl_key FROM ${session_facts.SQL_TABLE_NAME})-- WHERE session_event_count <SAFE_CAST( @{EVENT_COUNT} AS INT64))
   group by 1,2,3,4,5;;
   }
   dimension: session_date{
