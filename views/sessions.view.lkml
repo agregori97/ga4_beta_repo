@@ -53,12 +53,12 @@ select se.session_date session_date
                       ,  d.geo__sub_continent
                       ,  d.geo__region) geo_data
     ,  se.event_data event_data
-from ${session_event_packing.SQL_TABLE_NAME} se
-left join ${session_tags.SQL_TABLE_NAME} sa
+from ${session_event_packing.SQL_TABLE_NAME} as se
+left join ${session_tags.SQL_TABLE_NAME} as sa
   on  se.sl_key = sa.sl_key
-left join ${session_facts.SQL_TABLE_NAME} sf
+left join ${session_facts.SQL_TABLE_NAME} as sf
   on  se.sl_key = sf.sl_key
-left join ${device_geo.SQL_TABLE_NAME} d
+left join ${device_geo.SQL_TABLE_NAME} as d
   on  se.sl_key = d.sl_key
    ;;
   }
