@@ -40,10 +40,10 @@ view: session_event_packing {
           , sl.event_dimensions
           , sl.ecommerce
           , sl.items)) event_data
-    FROM ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
+    FROM ${session_list_w_event_hist.SQL_TABLE_NAME} sl
     WHERE sl.sl_key IN (
     SELECT sl_key
-    FROM ${session_facts.SQL_TABLE_NAME} AS sf
+    FROM ${session_facts.SQL_TABLE_NAME} sf
     WHERE CASE WHEN @{EVENT_COUNT} NOT NULL
     THEN session_event_count < SAFE_CAST(@{EVENT_COUNT} AS INT64)
     ELSE TRUE END)
