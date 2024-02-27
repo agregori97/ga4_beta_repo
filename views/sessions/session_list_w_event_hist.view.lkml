@@ -46,7 +46,7 @@ view: session_list_w_event_hist {
             , events.platform
             , events.event_dimensions
             , events.ecommerce
-            , ARRAY(select STRUCT it.* EXCEPT(item_params) from unnest(events.items) as it) as items
+            , ARRAY(select as STRUCT it.* EXCEPT(item_params) from unnest(events.items) as it) as items
             from `@{GA4_SCHEMA}.@{GA4_TABLE_VARIABLE}` events
             where {% incrementcondition %} timestamp(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'[0-9]+'))) {%  endincrementcondition %}
                --where timestamp(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'[0-9]+'))) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -15 DAY)))
