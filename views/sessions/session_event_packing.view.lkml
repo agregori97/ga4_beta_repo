@@ -5,7 +5,7 @@ view: session_event_packing {
     partition_keys: ["session_date"]
     cluster_keys: ["session_date"]
     increment_key: "session_date"
-    increment_offset: 10
+    increment_offset: 3
     sql:select sl.session_date session_date
       ,  sl.ga_session_id ga_session_id
       ,  sl.ga_session_number ga_session_number
