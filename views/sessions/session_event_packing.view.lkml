@@ -41,7 +41,8 @@ view: session_event_packing {
                           , sl.items)) event_data
     from ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
     WHERE sl_key IN (SELECT sl_key FROM ${session_facts.SQL_TABLE_NAME}
-    WHERE session_event_count <SAFE_CAST( @{EVENT_COUNT} AS INT64) OR @{EVENT_COUNT} IS NULL )
+    WHERE CASE WHEN COALESCE(@{EVENT_COUNT}) IS NULL THEN 1=1 WHEN COALESCE(@{EVENT_COUNT}) IS NOT NULL THEN
+    session_event_count< SAFE_CAST(@{EVENT_COUNT} AS INT64) END)
   group by 1,2,3,4,5;;
   }
   dimension: session_date{
