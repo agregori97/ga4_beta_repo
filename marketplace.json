@@ -16,7 +16,7 @@
     "GA4_TABLE_VARIABLE": {
         "label": "GA4 Table Variable"
     },
-    "GA4_EVENT_COUNT_LIMIT": {
+    "EVENT_COUNT": {
         "label": "Event Count Limit"
     }
   },
