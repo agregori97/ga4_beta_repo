@@ -42,7 +42,7 @@ view: session_event_packing {
     from ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
     WHERE sl.sl_key IN (SELECT sl_key FROM ${session_facts.SQL_TABLE_NAME}
     WHERE CASE WHEN "@{EVENT_COUNT}" = "" THEN 1=1 WHEN "@{EVENT_COUNT}" != "" THEN
-    session_event_count< 5000 END)
+    session_event_count< SAFE_CAST("@{EVENT_COUNT}" AS INT64) END)
   group by 1,2,3,4,5;;
   }
   dimension: session_date{
