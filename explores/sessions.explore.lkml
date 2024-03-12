@@ -119,7 +119,7 @@ explore: sessions {
   }
   join: arima_join {
     type: full_outer
-    sql: ${arima_join.date_join}=${events.event_time_date} ;;
+    sql: ${arima_join.date_join}=${sessions.session_date} ;;
     relationship: one_to_one
     view_label: "ARIMA"
   }
