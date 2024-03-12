@@ -7,8 +7,8 @@ view: forecasting {
   }
   dimension: forecast_timestamp {type:date sql:${TABLE}.forecast_timestamp ;;}
   dimension: events_event_name{label:"Forecasted Event" type:string sql:${TABLE}.events_event_name;;}
-  measure: forecast_value {type:sum sql:${TABLE}.forecast_value;;}
-  measure: standard_error {type:sum sql:${TABLE}.standard_error;;}
-  measure: prediction_interval_lower_bound {type:sum sql:${TABLE}.prediction_interval_lower_bound;;}
-  measure: prediction_interval_upper_bound {type:sum sql: ${TABLE}.prediction_interval_upper_bound;;}
+  measure: forecast_value {type:sum_distinct sql_distinct_key: ${events_event_name};;  sql:${TABLE}.forecast_value;;}
+  measure: standard_error {type:sum_distinct sql_distinct_key: ${events_event_name};; sql:${TABLE}.standard_error;;}
+  measure: prediction_interval_lower_bound {type:sum_distinct sql_distinct_key: ${events_event_name};;  sql:${TABLE}.prediction_interval_lower_bound;;}
+  measure: prediction_interval_upper_bound {type:sum_distinct sql_distinct_key: ${events_event_name};;  sql: ${TABLE}.prediction_interval_upper_bound;;}
 }
