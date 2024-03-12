@@ -118,10 +118,10 @@ explore: sessions {
     view_label: "ARIMA"
   }
   join: arima_join {
-    type: full_outer
+    type: left_outer
     sql: ${arima_join.date_join}=${sessions.session_date} ;;
     relationship: one_to_one
-    view_label: "arima"
+    view_label: "ARIMA"
   }
 
 }
