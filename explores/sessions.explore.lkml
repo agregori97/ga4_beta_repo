@@ -117,5 +117,10 @@ explore: sessions {
     relationship: one_to_one
     view_label: "ARIMA"
   }
+  join: arima_join {
+    sql:  ;;
+    relationship: one_to_one
+    view_label: "ARIMA"
+  }
 
 }
