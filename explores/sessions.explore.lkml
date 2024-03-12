@@ -111,7 +111,7 @@ explore: sessions {
     view_label: "Acquisition"
   }
   join: forecasting {
-    type: full_outer
+    type: inner
     sql_on:${events.event_name}=${forecasting.events_event_name} ;; # ${events.event_name}=${forecasting.events_event_name} AND ${events.event_time_date}=${forecasting.forecast_timestamp} ;;
     # ${events.event_time_date}=${forecasting.forecast_timestamp}  AND ${events.event_name}=${forecasting.event_name_identifier} ;;
     relationship: one_to_one
