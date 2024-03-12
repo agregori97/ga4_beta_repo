@@ -38,6 +38,10 @@ view: train_data_arima {
     type: number
     hidden: yes
   }
+  dimension: events_event_name {
+    type: string
+    hidden: yes
+  }
 
    }
   #explore: train_data_arima {fields:[ts,ev_count]}

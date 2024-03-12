@@ -43,6 +43,7 @@ view: session_event_packing {
     WHERE sl.sl_key IN (SELECT sl_key FROM ${session_facts.SQL_TABLE_NAME}
     WHERE CASE WHEN "@{EVENT_COUNT}" = "" THEN 1=1 WHEN "@{EVENT_COUNT}" != "" THEN
     session_event_count< SAFE_CAST("@{EVENT_COUNT}" AS INT64) END)
+    AND {% incrementcondition %} session_date {%  endincrementcondition %}
   group by 1,2,3,4,5;;
   }
   dimension: session_date{
