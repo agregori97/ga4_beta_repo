@@ -8,6 +8,7 @@ view: arima_join {
          SELECT DISTINCT session_date FROM ${sessions.SQL_TABLE_NAME}   ;;
   }
   dimension: date_join {
+    primary_key: yes
     type: date
     sql: ${TABLE}.forecast_timestamp;;
 

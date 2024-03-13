@@ -566,6 +566,12 @@ extends: [event_funnel, page_funnel]
     sql: ${user_pseudo_id} ;;
     value_format_name: formatted_number
   }
+  measure: total_event_count {
+    type: sum
+    description: "Total times an event occured on a specific date"
+    sql: ${session_data_session_event_count} ;;
+    value_format_name: formatted_number
+  }
 
   measure: total_new_users {
     view_label: "Audience"
