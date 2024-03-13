@@ -19,22 +19,22 @@ view: forecasting {
   dimension: forecast_value_num {
     type: number
     hidden: yes
-    sql: CASE WHEN ${arima_join.date_join}>CURRENT_DATE() THEN ${TABLE}.forecast_value ELSE 0 END;;
+    sql: CASE WHEN ${forecast_timestamp}>CURRENT_DATE() THEN ${TABLE}.forecast_value ELSE 0 END;;
   }
   dimension: se {
     type: number
     hidden: yes
-    sql: CASE WHEN ${arima_join.date_join}>CURRENT_DATE() THEN ${TABLE}.standard_error ELSE 0 END ;;
+    sql: CASE WHEN ${forecast_timestamp}>CURRENT_DATE() THEN ${TABLE}.standard_error ELSE 0 END ;;
   }
   dimension: upper {
     type: number
     hidden: yes
-    sql: CASE WHEN ${arima_join.date_join}>CURRENT_DATE() THEN ${TABLE}.prediction_interval_upper_bound ELSE 0 END ;;
+    sql: CASE WHEN ${forecast_timestamp}>CURRENT_DATE() THEN ${TABLE}.prediction_interval_upper_bound ELSE 0 END ;;
   }
   dimension: lower {
     type: number
     hidden: yes
-    sql: CASE WHEN ${arima_join.date_join}>CURRENT_DATE() THEN ${TABLE}.prediction_interval_lower_bound ELSE 0 END ;;
+    sql: CASE WHEN ${forecast_timestamp}>CURRENT_DATE() THEN ${TABLE}.prediction_interval_lower_bound ELSE 0 END ;;
   }
   measure: forecast_value
     {type:sum_distinct
