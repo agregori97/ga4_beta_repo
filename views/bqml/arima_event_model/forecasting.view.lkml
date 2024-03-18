@@ -19,22 +19,22 @@ view: forecasting {
   dimension: forecast_value_num {
     type: number
     hidden: yes
-    sql: CASE WHEN ${forecast_timestamp}>CURRENT_DATE() THEN ${TABLE}.forecast_value ELSE 0 END;;
+    sql:${TABLE}.forecast_value;;
   }
   dimension: se {
     type: number
     hidden: yes
-    sql: CASE WHEN ${forecast_timestamp}>CURRENT_DATE() THEN ${TABLE}.standard_error ELSE 0 END ;;
+    sql:${TABLE}.standard_error;;
   }
   dimension: upper {
     type: number
     hidden: yes
-    sql: CASE WHEN ${forecast_timestamp}>CURRENT_DATE() THEN ${TABLE}.prediction_interval_upper_bound ELSE 0 END ;;
+    sql: ${TABLE}.prediction_interval_upper_bound;;
   }
   dimension: lower {
     type: number
     hidden: yes
-    sql: CASE WHEN ${forecast_timestamp}>CURRENT_DATE() THEN ${TABLE}.prediction_interval_lower_bound ELSE 0 END ;;
+    sql: ${TABLE}.prediction_interval_lower_bound ;;
   }
   measure: forecast_value
     {type:sum_distinct
