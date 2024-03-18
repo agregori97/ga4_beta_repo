@@ -1,8 +1,8 @@
-include: "/views/bqml/arima_event_model/train_data_arima.view.lkml"
+include: "/views/bqml/arima_event_model/*.view.lkml"
 view: forecasting {
   derived_table: {
     datagroup_trigger: bqml_datagroup
-    sql: SELECT * FROM ML.FORECAST(MODEL `@{GA4_SCHEMA}.event_occurence_forecasting`,
+    sql: SELECT * FROM ML.FORECAST(MODEL ${model_arima.SQL_TABLE_NAME},
       STRUCT(60 AS horizon, 0.8 AS confidence_level)) ;;
   }
   dimension: forecast_timestamp
@@ -37,15 +37,25 @@ view: forecasting {
     sql: ${TABLE}.prediction_interval_lower_bound ;;
   }
   measure: forecast_value
-    {type:sum_distinct
+    {
+      type:sum_distinct
       sql_distinct_key: ${events_event_name};;
       sql:${forecast_value_num};;
     }
   measure: standard_error
-    {type:sum_distinct
+    {
+      type:sum_distinct
       sql_distinct_key: ${events_event_name};;
       sql:${se};;
     }
-  measure: prediction_interval_lower_bound {type:sum_distinct sql_distinct_key: ${events_event_name};;  sql:${lower};;}
-  measure: prediction_interval_upper_bound {type:sum_distinct sql_distinct_key: ${events_event_name};;  sql: ${upper};;}
+  measure: prediction_interval_lower_bound {
+    type:sum_distinct
+    sql_distinct_key: ${events_event_name};;
+    sql:${lower};;
+    }
+  measure: prediction_interval_upper_bound {
+    type:sum_distinct
+    sql_distinct_key: ${events_event_name};;
+    sql: ${upper};;
+    }
 }
