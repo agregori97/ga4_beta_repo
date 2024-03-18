@@ -23,7 +23,7 @@ view: train_data_arima {
             COUNT(CASE WHEN (sessions.sl_key ) IS NOT NULL THEN 1 ELSE NULL END) AS `__f4`
         FROM ${sessions.SQL_TABLE_NAME} AS sessions
         LEFT JOIN UNNEST(sessions.event_data) as events with offset as event_row
-        WHERE ((( sessions.session_date  ) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY))) AND ( sessions.session_date  ) < ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY)))))
+        WHERE ((( sessions.session_date  ) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -89 DAY))) AND ( sessions.session_date  ) < ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -89 DAY), INTERVAL 90 DAY)))))
         GROUP BY 1,2,3) AS t2
     GROUP BY 1,2
     ORDER BY
