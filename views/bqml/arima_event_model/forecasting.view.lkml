@@ -9,7 +9,7 @@ view: forecasting {
     {
       primary_key: yes
       type:date
-      sql:CASE  WHEN DATE(${TABLE}.forecast_timestamp)=${arima_join.date_join} THEN ${TABLE}.forecast_timestamp ELSE null END  ;;
+      sql:${TABLE}.forecast_timestamp ;;
     }
   dimension: events_event_name
     {
@@ -20,43 +20,43 @@ view: forecasting {
   dimension: forecast_value_num {
     type: number
     hidden: no
-    sql:CASE  WHEN DATE(${TABLE}.forecast_timestamp)=${arima_join.date_join} THEN ${TABLE}.forecast_value ELSE null END;;
+    sql:${TABLE}.forecast_value ;;
   }
   dimension: se {
     type: number
     hidden: no
-    sql:CASE  WHEN DATE(${TABLE}.forecast_timestamp)=${arima_join.date_join} THEN ${TABLE}.standard_error ELSE null END;;
+    sql:${TABLE}.standard_error;;
   }
   dimension: upper {
     type: number
     hidden: no
-    sql: CASE  WHEN DATE(${TABLE}.forecast_timestamp)=${arima_join.date_join} THEN ${TABLE}.prediction_interval_upper_bound ELSE null END;;
+    sql: ${TABLE}.prediction_interval_upper_bound;;
   }
   dimension: lower {
     type: number
     hidden: no
-    sql: CASE  WHEN DATE(${TABLE}.forecast_timestamp)=${arima_join.date_join} THEN ${TABLE}.prediction_interval_lower_bound  ELSE null END ;;
+    sql:${TABLE}.prediction_interval_lower_bound ;;
   }
   measure: forecast_value
     {
-      type:number
-      #sql_distinct_key: ${events_event_name};;
+      type:sum_distinct
+      sql_distinct_key: ${events_event_name};;
       sql:${forecast_value_num};;
     }
   measure: standard_error
     {
-      type: number
-      #sql_distinct_key: ${events_event_name};;
+      type: sum_distinct
+      sql_distinct_key: ${events_event_name};;
       sql:${se};;
     }
   measure: prediction_interval_lower_bound {
-    type:number
-    #sql_distinct_key: ${events_event_name};;
+    type:sum_distinct
+    sql_distinct_key: ${events_event_name};;
     sql:${lower};;
     }
   measure: prediction_interval_upper_bound {
-    type:number
-    #sql_distinct_key: ${events_event_name};;
+    type:sum_distinct
+    sql_distinct_key: ${events_event_name};;
     sql: ${upper};;
     }
 }

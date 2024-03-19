@@ -112,16 +112,16 @@ explore: sessions {
   }
   join: forecasting {
     type: full_outer
-    sql_on:${events.event_name}=${forecasting.events_event_name} ;;
+    sql_on:${forecasting.forecast_timestamp}=${events.event_time_date} ;;#${events.event_name}=${forecasting.events_event_name} AND
     relationship: one_to_one
     view_label: "ARIMA"
   }
-  join: arima_join {
-    type: inner
-    sql_on: ${forecasting.forecast_timestamp}=${arima_join.date_join} OR
-    ${events.event_time_date}=${arima_join.date_join};;
-    relationship: one_to_one
-    view_label: "ARIMA"
-  }
+  #join: arima_join {
+  #  type: inner
+  #  sql_on: ${forecasting.forecast_timestamp}=${arima_join.date_join} OR
+  #  ${sessions.session_date}=${arima_join.date_join};;
+  #  relationship: many_to_one
+  #  view_label: "ARIMA"
+  #}
 
 }

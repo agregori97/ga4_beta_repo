@@ -1,6 +1,7 @@
 include: "/views/event_data_dimensions/event_funnel.view"
 include: "/views/event_data_dimensions/page_funnel.view"
 include: "/views/sessions/*.view"
+include: "/views/bqml/*/*.view"
 
 view: sessions {
   derived_table: {
@@ -186,7 +187,7 @@ extends: [event_funnel, page_funnel]
   }
     dimension: session_data_session_event_count {
       type: number
-      sql: ${session_data}.session_event_count ;;
+      sql:${session_data}.session_event_count;;
       label: "Session Event Count"
     }
     dimension: session_data_engaged_events {
@@ -566,12 +567,12 @@ extends: [event_funnel, page_funnel]
     sql: ${user_pseudo_id} ;;
     value_format_name: formatted_number
   }
-  measure: total_event_count {
-    type: sum
-    description: "Total times an event occured on a specific date"
-    sql: ${session_data_session_event_count} ;;
-    value_format_name: formatted_number
-  }
+  #measure: total_event_count {
+  #  type: sum
+  #  description: "Total times an event occured on a specific date"
+  #  sql: ${session_data_session_event_count} ;;
+  #  value_format_name: formatted_number
+  #}
 
   measure: total_new_users {
     view_label: "Audience"
