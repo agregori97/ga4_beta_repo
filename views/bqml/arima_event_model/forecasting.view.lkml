@@ -40,23 +40,23 @@ view: forecasting {
   measure: forecast_value
     {
       type:sum_distinct
-      sql_distinct_key: ${forecast_timestamp};;
+      sql_distinct_key: ${events_event_name};;
       sql:${forecast_value_num};;
     }
   measure: standard_error
     {
       type:sum_distinct
-      sql_distinct_key: ${forecast_timestamp};;
+      sql_distinct_key: ${events_event_name};;
       sql:${se};;
     }
   measure: prediction_interval_lower_bound {
     type:sum_distinct
-    sql_distinct_key: ${forecast_timestamp};;
+    sql_distinct_key: ${events_event_name};;
     sql:${lower};;
     }
   measure: prediction_interval_upper_bound {
     type:sum_distinct
-    sql_distinct_key: ${forecast_timestamp};;
+    sql_distinct_key: ${events_event_name};;
     sql: ${upper};;
     }
 }
