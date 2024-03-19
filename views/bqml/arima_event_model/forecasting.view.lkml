@@ -9,7 +9,7 @@ view: forecasting {
     {
       primary_key: yes
       type:date
-      sql:${TABLE}.forecast_timestamp ;;
+      sql:CASE  WHEN DATE(${TABLE}.forecast_timestamp)=${arima_join.date_join} THEN ${TABLE}.forecast_timestamp ELSE null END  ;;
     }
   dimension: events_event_name
     {
@@ -19,23 +19,23 @@ view: forecasting {
     }
   dimension: forecast_value_num {
     type: number
-    hidden: yes
-    sql:${TABLE}.forecast_value;;
+    hidden: no
+    sql:CASE  WHEN DATE(${TABLE}.forecast_timestamp)=${arima_join.date_join} THEN ${TABLE}.forecast_value ELSE null END;;
   }
   dimension: se {
     type: number
-    hidden: yes
-    sql:${TABLE}.standard_error;;
+    hidden: no
+    sql:CASE  WHEN DATE(${TABLE}.forecast_timestamp)=${arima_join.date_join} THEN ${TABLE}.standard_error ELSE null END;;
   }
   dimension: upper {
     type: number
-    hidden: yes
-    sql: ${TABLE}.prediction_interval_upper_bound;;
+    hidden: no
+    sql: CASE  WHEN DATE(${TABLE}.forecast_timestamp)=${arima_join.date_join} THEN ${TABLE}.prediction_interval_upper_bound ELSE null END;;
   }
   dimension: lower {
     type: number
-    hidden: yes
-    sql: ${TABLE}.prediction_interval_lower_bound ;;
+    hidden: no
+    sql: CASE  WHEN DATE(${TABLE}.forecast_timestamp)=${arima_join.date_join} THEN ${TABLE}.prediction_interval_lower_bound  ELSE null END ;;
   }
   measure: forecast_value
     {
