@@ -2,7 +2,7 @@ include: "/views/bqml/arima_event_model/*.view.lkml"
 view: forecasting {
   derived_table: {
     datagroup_trigger: bqml_datagroup
-    sql: SELECT * FROM ML.FORECAST(MODEL `@{GA4_SCHEMA}.model_arima`,
+    sql: SELECT * FROM ML.EXPLAIN_FORECAST(MODEL ${model_arima.SQL_TABLE_NAME},
       STRUCT(60 AS horizon, 0.8 AS confidence_level)) ;;
   }
   dimension: forecast_timestamp

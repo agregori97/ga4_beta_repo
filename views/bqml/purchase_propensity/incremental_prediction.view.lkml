@@ -49,7 +49,7 @@ view: pred_history {
   # }
 }
 
-explore: incremental_prediction {}
+explore: incremental_prediction {hidden:yes}
 view: incremental_prediction {
   derived_table: {
     datagroup_trigger: bqml_datagroup

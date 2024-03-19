@@ -31,11 +31,11 @@ view: future_purchase_model {
 }
 
 ######################## TRAINING INFORMATION #############################
-explore:  future_purchase_model_evaluation {}
-explore: future_purchase_model_training_info {}
-explore: roc_curve {}
-explore: confusion_matrix {}
-explore: feature_importance {}
+explore:  future_purchase_model_evaluation {hidden:yes}
+explore: future_purchase_model_training_info {hidden:yes}
+explore: roc_curve {hidden:yes}
+explore: confusion_matrix {hidden:yes}
+explore: feature_importance {hidden:yes}
 
 # VIEWS:
 view: future_purchase_model_evaluation {
@@ -151,7 +151,7 @@ view: feature_importance {
 }
 
 ########################################## PREDICT FUTURE ############################
-explore:  future_purchase_prediction {}
+explore:  future_purchase_prediction {hidden:yes}
 view: future_purchase_prediction {
   derived_table: {
     datagroup_trigger: bqml_datagroup

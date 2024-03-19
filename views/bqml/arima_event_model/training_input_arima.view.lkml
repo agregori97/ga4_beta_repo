@@ -2,7 +2,7 @@ view: training_input_arima {
   derived_table: {
     datagroup_trigger: bqml_datagroup
     sql:SELECT
-    (DATE(TIMESTAMP_MICROS(events.event_timestamp) )) AS events_event_time_date,
+    (DATE(TIMESTAMP_MICROS(events.event_timestamp) )) AS sessions_session_date,
     events.event_name  AS events_event_name,
     COUNT(DISTINCT sessions.sl_key ) AS sum_of_session_event_count
 FROM ${sessions.SQL_TABLE_NAME} AS sessions
