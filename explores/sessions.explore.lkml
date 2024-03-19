@@ -117,7 +117,7 @@ explore: sessions {
     view_label: "ARIMA"
   }
   join: arima_join {
-    type: full_outer
+    type: inner
     sql_on: ${forecasting.forecast_timestamp}=${arima_join.date_join} OR
     ${events.event_time_date}=${arima_join.date_join};;
     relationship: one_to_one
