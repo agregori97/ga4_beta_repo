@@ -39,24 +39,24 @@ view: forecasting {
   }
   measure: forecast_value
     {
-      type:sum
-      #sql_distinct_key: ${arima_join.date_join};;
+      type:sum_distinct
+      sql_distinct_key: ${forecast_timestamp};;
       sql:${forecast_value_num};;
     }
   measure: standard_error
     {
-      type:sum
-      #sql_distinct_key: ${arima_join.date_join};;
+      type:sum_distinct
+      sql_distinct_key: ${forecast_timestamp};;
       sql:${se};;
     }
   measure: prediction_interval_lower_bound {
-    type:sum
-    #sql_distinct_key: ${arima_join.date_join};;
+    type:sum_distinct
+    sql_distinct_key: ${forecast_timestamp};;
     sql:${lower};;
     }
   measure: prediction_interval_upper_bound {
-    type:sum
-    #sql_distinct_key: ${arima_join.date_join};;
+    type:sum_distinct
+    sql_distinct_key: ${forecast_timestamp};;
     sql: ${upper};;
     }
 }
