@@ -7,6 +7,7 @@ view: forecasting {
   }
   dimension: forecast_timestamp
     {
+      primary_key: yes
       type:date
       sql:${TABLE}.forecast_timestamp ;;
     }
