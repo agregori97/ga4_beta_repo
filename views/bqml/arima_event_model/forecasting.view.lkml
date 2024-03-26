@@ -9,7 +9,7 @@ view: forecasting {
     {
       primary_key: yes
       type:date
-      sql:${TABLE}.forecast_timestamp ;;
+      sql:${TABLE}.time_series_timestamp ;;
     }
   dimension: events_event_name
     {
@@ -20,7 +20,7 @@ view: forecasting {
   dimension: forecast_value_num {
     type: number
     hidden: no
-    sql:${TABLE}.forecast_value ;;
+    sql:${TABLE}.time_series_data ;;
   }
   dimension: se {
     type: number

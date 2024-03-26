@@ -1,5 +1,6 @@
 ######################## TRAINING/TESTING INPUTS #############################
 include: "/views/bqml/purchase_propensity/*.view"
+include: "/views/sessions/*.view"
 
 ######################## MODEL #############################
 
