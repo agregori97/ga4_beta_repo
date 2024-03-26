@@ -24,7 +24,7 @@ LEFT JOIN event_params AS ep3 ON sl.sl_key = ep3.sl_key AND ep3.key='campaign'
 LEFT JOIN event_params AS ep4 ON sl.sl_key = ep4.sl_key AND ep4.key='source'
 WHERE sl.event_name = 'page_view'
 AND EXISTS (SELECT 1 FROM event_params WHERE key = 'medium')
-GROUP BY 1-- NULL medium is direct, filtering out nulls to ensure last non-direct.
+GROUP BY 1,2-- NULL medium is direct, filtering out nulls to ensure last non-direct.
     ;;
   }
 }
