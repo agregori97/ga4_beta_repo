@@ -1,9 +1,9 @@
 include: "/views/sessions/*.view.lkml"
 view: session_tags{
   derived_table:{
-    increment_key: "session_date"
-    partition_keys: ["session_date"]
-    cluster_keys: ["session_date"]
+    #increment_key: "session_date"
+    #partition_keys: ["session_date"]
+    #cluster_keys: ["session_date"]
     datagroup_trigger: ga4_default_datagroup
     sql: WITH event_params AS (
   SELECT sl.sl_key, sl.session_date,sl.event_timestamp as sl_event_timestamp, ep.value.string_value AS param_value, ep.key
