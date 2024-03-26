@@ -5,26 +5,16 @@ view: session_tags{
     partition_keys: ["session_date"]
     cluster_keys: ["session_date"]
     datagroup_trigger: ga4_default_datagroup
-    sql: WITH event_params AS (
-  SELECT sl_key, session_date, event_timestamp,
-         ROW_NUMBER() OVER (PARTITION BY sl_key ORDER BY event_timestamp DESC) AS first_occurrence,
-         ep.value.string_value AS param_value, ep.key
-  FROM ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl,
-       UNNEST(sl.event_params) AS ep
-  WHERE {% incrementcondition %} session_date {% endincrementcondition %}
-)
-SELECT
-  DISTINCT sl.sl_key, sl.session_date,
-  MAX(CASE WHEN ep.key = 'medium' AND first_occurrence = 1 THEN ep.param_value END) AS medium,
-  MAX(CASE WHEN ep.key = 'source' AND first_occurrence = 1 THEN ep.param_value END) AS source,
-  MAX(CASE WHEN ep.key = 'campaign' AND first_occurrence = 1 THEN ep.param_value END) AS campaign,
-  MAX(CASE WHEN ep.key = 'page_referrer' AND first_occurrence = 1 THEN ep.param_value END) AS page_referrer
-FROM ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
-LEFT JOIN event_params AS ep ON sl.sl_key = ep.sl_key
-WHERE sl.event_name = 'page_view'
-AND EXISTS (SELECT 1 FROM event_params WHERE key = 'medium')
-AND {% incrementcondition %} session_date {% endincrementcondition %}
-GROUP BY 1, 2-- NULL medium is direct, filtering out nulls to ensure last non-direct.
+    sql:select distinct sl.sl_key, sl.session_date session_date,
+   , first_value((select value.string_value from ep where key = 'medium')) over (partition by sl.sl_key order by sl.event_timestamp desc) medium
+   , first_value((select value.string_value from ep where key = 'source')) over (partition by sl.sl_key order by sl.event_timestamp desc) source
+   , first_value((select value.string_value from ep where key = 'campaign')) over (partition by sl.sl_key order by sl.event_timestamp desc) campaign
+   , first_value((select value.string_value from ep where key = 'page_referrer')) over (partition by sl.sl_key order by sl.event_timestamp desc) page_referrer
+  from ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl, UNNEST(sl.event_params) ep
+ where sl.event_name in ('page_view')
+  and (select value.string_value from unnest(sl.event_params) where key = 'medium') is not null
+and {% incrementcondition %} session_date {% endincrementcondition %}
+-- NULL medium is direct, filtering out nulls to ensure last non-direct.
     ;;
   }
 }
