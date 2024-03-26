@@ -12,10 +12,10 @@ view: session_tags{
 )
 SELECT
   DISTINCT sl.sl_key,
-  MIN(CASE WHEN ep.key = 'medium' THEN param_value END IGNORE NULLS) AS medium,
-  MIN(CASE WHEN ep.key = 'source' THEN param_value END IGNORE NULLS) AS source,
-  MIN(CASE WHEN ep.key = 'campaign' THEN param_value END IGNORE NULLS) AS campaign,
-  MIN(CASE WHEN ep.key = 'page_referrer' THEN param_value END IGNORE NULLS) AS page_referrer
+  MIN(CASE WHEN ep.key = 'medium' THEN param_value END) AS medium,
+  MIN(CASE WHEN ep.key = 'source' THEN param_value END ) AS source,
+  MIN(CASE WHEN ep.key = 'campaign' THEN param_value END) AS campaign,
+  MIN(CASE WHEN ep.key = 'page_referrer' THEN param_value END) AS page_referrer
 FROM ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
 INNER JOIN event_params AS ep ON sl.sl_key = ep.sl_key
 WHERE sl.event_name = 'page_view'
