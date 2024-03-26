@@ -7,7 +7,7 @@ view: session_tags{
     datagroup_trigger: ga4_default_datagroup
     sql: WITH event_params AS (
   SELECT sl_key, session_date, event_timestamp,
-         ROW_NUMBER() OVER (PARTITION BY sl_key, key ORDER BY event_timestamp) AS first_occurrence,
+         ROW_NUMBER() OVER (PARTITION BY sl_key ORDER BY event_timestamp DESC) AS first_occurrence,
          ep.value.string_value AS param_value, ep.key
   FROM ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl,
        UNNEST(sl.event_params) AS ep
