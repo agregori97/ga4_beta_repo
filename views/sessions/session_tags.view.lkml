@@ -6,13 +6,13 @@ view: session_tags{
     cluster_keys: ["session_date"]
     datagroup_trigger: ga4_default_datagroup
     sql:select distinct sl.sl_key, sl.session_date session_date
-   , first_value((select value.string_value from ep where key = 'medium')) over (partition by sl.sl_key order by sl.event_timestamp desc) medium
-   , first_value((select value.string_value from ep where key = 'source')) over (partition by sl.sl_key order by sl.event_timestamp desc) source
-   , first_value((select value.string_value from ep where key = 'campaign')) over (partition by sl.sl_key order by sl.event_timestamp desc) campaign
-   , first_value((select value.string_value from ep where key = 'page_referrer')) over (partition by sl.sl_key order by sl.event_timestamp desc) page_referrer
-  from ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl, UNNEST(sl.event_params) ep
- where sl.event_name in ('page_view')
-  and (select value.string_value from unnest(sl.event_params) where key = 'medium') is not null
+  , first_value(case when ep.key = 'medium' then ep.value.string_value end) over (partition by sl.sl_key order by sl.event_timestamp desc) medium
+  , first_value(case when ep.key = 'source' then ep.value.string_value end) over (partition by sl.sl_key order by sl.event_timestamp desc) source
+  , first_value(case when ep.key = 'campaign' then ep.value.string_value end) over (partition by sl.sl_key order by sl.event_timestamp desc) campaign
+  , first_value(case when ep.key = 'page_referrer' then ep.value.string_value end) over (partition by sl.sl_key order by sl.event_timestamp desc) page_referrer
+from ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
+  , UNNEST(sl.event_params) AS ep
+where sl.event_name in ('page_view')
 and {% incrementcondition %} session_date {% endincrementcondition %}
 -- NULL medium is direct, filtering out nulls to ensure last non-direct.
     ;;
