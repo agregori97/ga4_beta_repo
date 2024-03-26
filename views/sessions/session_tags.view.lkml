@@ -17,4 +17,8 @@ and {% incrementcondition %} session_date {% endincrementcondition %}
 -- NULL medium is direct, filtering out nulls to ensure last non-direct.
     ;;
   }
+  dimension: session_date {
+    hidden: yes
+    sql: ${TABLE}.session_date ;;
+  }
 }
