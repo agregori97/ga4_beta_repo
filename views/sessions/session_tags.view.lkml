@@ -9,7 +9,7 @@ view: session_tags{
   SELECT sl_key, session_date, event_timestamp,ep.value.string_value AS  param_value, ep.key
   FROM ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl,
        UNNEST(sl.event_params) AS ep
-  GROUP BY 1,2 ORDER BY 1,3 DESC
+  ORDER BY 1,3 DESC
 )
 SELECT
   DISTINCT sl.sl_key, session_date,
