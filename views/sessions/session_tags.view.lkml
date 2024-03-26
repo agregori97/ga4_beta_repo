@@ -19,7 +19,7 @@ SELECT
   page_referrer = (SELECT param_value FROM event_params WHERE  event_params.key = 'page_referrer' ORDER BY event_params.sl_event_timestamp DESC LIMIT 1)
 FROM ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
 WHERE sl.event_name = 'page_view'
-  AND EXISTS (SELECT 1 FROM event_params WHERE key = 'medium')
+  AND EXISTS (SELECT 1 FROM event_params WHERE event_params.key = 'medium')
   AND {% incrementcondition %} session_date {% endincrementcondition %} -- NULL medium is direct, filtering out nulls to ensure last non-direct.
     ;;
   }
