@@ -3,8 +3,7 @@ view: training_input {
   derived_table: {
     datagroup_trigger: bqml_datagroup
     sql:
-    select * from
-    (WITH
+    WITH
       visitors_labeled AS (
         SELECT
           user_pseudo_id,
@@ -210,6 +209,6 @@ view: training_input {
       SELECT
         *
       FROM
-        user_model);;
+        user_model;;
   }
 }
