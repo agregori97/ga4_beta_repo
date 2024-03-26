@@ -5,7 +5,7 @@ view: session_tags{
     partition_keys: ["session_date"]
     cluster_keys: ["session_date"]
     datagroup_trigger: ga4_default_datagroup
-    sql:select distinct sl.sl_key, sl.session_date session_date,
+    sql:select distinct sl.sl_key, sl.session_date session_date
    , first_value((select value.string_value from ep where key = 'medium')) over (partition by sl.sl_key order by sl.event_timestamp desc) medium
    , first_value((select value.string_value from ep where key = 'source')) over (partition by sl.sl_key order by sl.event_timestamp desc) source
    , first_value((select value.string_value from ep where key = 'campaign')) over (partition by sl.sl_key order by sl.event_timestamp desc) campaign
