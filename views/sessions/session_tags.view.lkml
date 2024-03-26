@@ -6,14 +6,22 @@ view: session_tags{
     cluster_keys: ["session_date"]
     datagroup_trigger: ga4_default_datagroup
     sql: select distinct sl.sl_key, sl.session_date session_date,
-      ,  first_value((select value.string_value from unnest(sl.event_params) where key = 'medium')) over (partition by sl.sl_key order by sl.event_timestamp desc) medium
-      ,  first_value((select value.string_value from unnest(sl.event_params) where key = 'source')) over (partition by sl.sl_key order by sl.event_timestamp desc) source
-      ,  first_value((select value.string_value from unnest(sl.event_params) where key = 'campaign')) over (partition by sl.sl_key order by sl.event_timestamp desc) campaign
-      ,  first_value((select value.string_value from unnest(sl.event_params) where key = 'page_referrer')) over (partition by sl.sl_key order by sl.event_timestamp desc) page_referrer
-    from ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
-  where sl.event_name in ('page_view')
-    and (select value.string_value from unnest(sl.event_params) where key = 'medium') is not null
-    and {% incrementcondition %} session_date {% endincrementcondition %} -- NULL medium is direct, filtering out nulls to ensure last non-direct.
+  ep.value.string_value as medium,
+  ep2.value.string_value as source,
+  ep3.value.string_value as campaign,
+  ep4.value.string_value as page_referrer
+from ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
+  UNNEST(sl.event_params) AS ep
+  LEFT JOIN UNNEST(sl.event_params) AS ep2
+    ON sl.sl_key = ep2.sl_key AND ep2.key = 'source'
+  LEFT JOIN UNNEST(sl.event_params) AS ep3
+    ON sl.sl_key = ep3.sl_key AND ep3.key = 'campaign'
+  LEFT JOIN UNNEST(sl.event_params) AS ep4
+    ON sl.sl_key = ep4.sl_key AND ep4.key = 'page_referrer'
+where sl.event_name = 'page_view'
+  and ep.key = 'medium'
+  and ep.value.string_value is not null
+  and {% incrementcondition %} session_date {% endincrementcondition %} -- NULL medium is direct, filtering out nulls to ensure last non-direct.
     ;;
   }
 }
