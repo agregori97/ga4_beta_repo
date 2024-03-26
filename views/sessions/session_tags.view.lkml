@@ -19,7 +19,6 @@ SELECT
 FROM ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
 WHERE sl.event_name = 'page_view'
   AND EXISTS (SELECT 1 FROM event_params WHERE event_params.key = 'medium')
-  AND {% incrementcondition %} sl.session_date {% endincrementcondition %}
   GROUP BY 1-- NULL medium is direct, filtering out nulls to ensure last non-direct.
     ;;
   }
