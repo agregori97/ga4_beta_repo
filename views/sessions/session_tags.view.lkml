@@ -12,7 +12,7 @@ view: session_tags{
   ORDER BY 1,3 DESC
 )
 SELECT
-  DISTINCT sl.sl_key, session_date,
+  DISTINCT sl.sl_key, sl.session_date,
   ep.param_value AS medium,
   ep2.param_value AS source,
   ep3.param_value AS campaign,
