@@ -24,7 +24,7 @@ view: training_input {
         FROM
           ${session_list_w_event_hist.SQL_TABLE_NAME} AS GA
         WHERE
-          session_date > FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL (@{GA4_BQML_train_months} + @{GA4_BQML_test_months}) MONTH)) AND session_date < FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_test_months} MONTH))
+          session_date > TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL (@{GA4_BQML_train_months} + @{GA4_BQML_test_months}) MONTH))) AND session_date < TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_test_months} MONTH)))
         GROUP BY
           user_pseudo_id
       ),
@@ -39,7 +39,7 @@ view: training_input {
         LEFT JOIN visitors_labeled AS Labels
           ON GA.user_pseudo_id = Labels.user_pseudo_id
         WHERE
-          session_date > TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL (@{GA4_BQML_train_months} + @{GA4_BQML_test_months}) MONTH))) AND session_date < TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_test_months} MONTH)))
+          session_date > TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL (@{GA4_BQML_train_months} + @{GA4_BQML_test_months}) MONTH))) AND session_date < TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_test_months} MONTH)))
         AND (
           GA.event_timestamp < IFNULL(event_session, 0)
           OR event_session IS NULL)
@@ -62,7 +62,7 @@ view: training_input {
         LEFT JOIN visitors_labeled AS Labels
           ON GA.user_pseudo_id = Labels.user_pseudo_id
         WHERE
-          session_date > TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL (@{GA4_BQML_train_months} + @{GA4_BQML_test_months}) MONTH))) AND session_date < TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_test_months} MONTH)))
+          session_date > TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL (@{GA4_BQML_train_months} + @{GA4_BQML_test_months}) MONTH))) AND session_date < TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_test_months} MONTH)))
         AND (
           GA.event_timestamp < IFNULL(event_session, 0)
           OR event_session IS NULL)
@@ -104,7 +104,7 @@ view: training_input {
         LEFT JOIN visitors_labeled AS Labels
           ON GA.user_pseudo_id = Labels.user_pseudo_id
         WHERE
-          session_date > TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL (@{GA4_BQML_train_months} + @{GA4_BQML_test_months}) MONTH))) AND session_date < TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_test_months} MONTH)))
+          session_date > TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL (@{GA4_BQML_train_months} + @{GA4_BQML_test_months}) MONTH))) AND session_date < TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_test_months} MONTH)))
         AND (
           GA.event_timestamp < IFNULL(event_session, 0)
           OR event_session IS NULL)
@@ -142,7 +142,7 @@ view: training_input {
           LEFT JOIN visitors_labeled AS Labels
             ON GA.user_pseudo_id = Labels.user_pseudo_id
           WHERE
-           session_date > TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL (@{GA4_BQML_train_months} + @{GA4_BQML_test_months}) MONTH))) AND session_date < TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_test_months} MONTH)))
+           session_date > TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL (@{GA4_BQML_train_months} + @{GA4_BQML_test_months}) MONTH))) AND session_date < TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_test_months} MONTH)))
           AND (
             GA.event_timestamp < IFNULL(event_session, 0)
             OR event_session IS NULL)
@@ -199,7 +199,7 @@ view: training_input {
         LEFT JOIN event_cnts AS Event_counts
           ON GA.user_pseudo_id = Event_counts.user_pseudo_id
         WHERE
-          session_date > TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL (@{GA4_BQML_train_months} + @{GA4_BQML_test_months}) MONTH))) AND session_date < TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_test_months} MONTH)))
+          session_date > TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL (@{GA4_BQML_train_months} + @{GA4_BQML_test_months}) MONTH))) AND session_date < TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_test_months} MONTH)))
           AND (
             GA.event_timestamp < IFNULL(event_session, 0)
             OR event_session IS NULL)

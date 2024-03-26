@@ -26,7 +26,7 @@ view: future_input {
         FROM
           ${session_list_w_event_hist.SQL_TABLE_NAME} AS GA
         WHERE
-          DATE(session_date) > TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH)))
+          DATE(session_date) > TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH)))
         GROUP BY
           user_pseudo_id
       ),
@@ -41,7 +41,7 @@ view: future_input {
         LEFT JOIN visitors_labeled AS Labels
           ON GA.user_pseudo_id = Labels.user_pseudo_id
         WHERE
-          DATE(session_date) > TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH)))
+          DATE(session_date) > TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH)))
         AND (
           GA.event_timestamp < IFNULL(event_session, 0)
           OR event_session IS NULL)
@@ -64,7 +64,7 @@ view: future_input {
         LEFT JOIN visitors_labeled AS Labels
           ON GA.user_pseudo_id = Labels.user_pseudo_id
         WHERE
-          DATE(session_date) > TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH)))
+          session_date > TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH)))
         AND (
           GA.event_timestamp < IFNULL(event_session, 0)
           OR event_session IS NULL)
@@ -106,7 +106,7 @@ view: future_input {
         LEFT JOIN visitors_labeled AS Labels
           ON GA.user_pseudo_id = Labels.user_pseudo_id
         WHERE
-          DATE(session_date) > TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH)))
+          session_date > TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH)))
         AND (
           GA.event_timestamp < IFNULL(event_session, 0)
           OR event_session IS NULL)
@@ -144,7 +144,7 @@ view: future_input {
           LEFT JOIN visitors_labeled AS Labels
             ON GA.user_pseudo_id = Labels.user_pseudo_id
           WHERE
-            DATE(session_date) > TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH)))
+            session_date > TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH)))
           AND (
             GA.event_timestamp < IFNULL(event_session, 0)
             OR event_session IS NULL)
@@ -201,7 +201,7 @@ view: future_input {
         LEFT JOIN event_cnts AS Event_counts
           ON GA.user_pseudo_id = Event_counts.user_pseudo_id
         WHERE
-          DATE(session_date) > TIMESTAMP(FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH)))
+          session_date > TIMESTAMP(SAFE.PARSE_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @{GA4_BQML_future_synth_months} MONTH)))
           AND (
             GA.event_timestamp < IFNULL(event_session, 0)
             OR event_session IS NULL)
