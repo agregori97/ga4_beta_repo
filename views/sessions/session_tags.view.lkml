@@ -11,7 +11,8 @@ view: session_tags{
   ep3.value.string_value as campaign,
   ep4.value.string_value as page_referrer
 from ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
-  UNNEST(sl.event_params) AS ep
+  LEFT JOIN UNNEST(sl.event_params) AS ep
+    ON sl.sl_key =ep.sl_key
   LEFT JOIN UNNEST(sl.event_params) AS ep2
     ON sl.sl_key = ep2.sl_key AND ep2.key = 'source'
   LEFT JOIN UNNEST(sl.event_params) AS ep3
