@@ -18,6 +18,7 @@ and {% incrementcondition %} session_date {% endincrementcondition %}
     ;;
   }
   dimension: session_date {
+    type: date
     hidden: yes
     sql: ${TABLE}.session_date ;;
   }
