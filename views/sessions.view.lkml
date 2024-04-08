@@ -12,10 +12,10 @@ view: sessions {
     increment_offset: 3
     sql:
 -- Final Select Statement:
-select se.session_date session_date
-    ,  se.ga_session_id ga_session_id
-    ,  se.ga_session_number ga_session_number
-    ,  se.user_pseudo_id user_pseudo_id
+select se.session_date as session_date
+    ,  se.ga_session_id as ga_session_id
+    ,  se.ga_session_number as ga_session_number
+    ,  se.user_pseudo_id as user_pseudo_id
     ,  se.sl_key
     -- packing session-level data into structs by category
     ,  (SELECT AS STRUCT coalesce(sa.medium,'(none)') medium -- sessions missing last-non-direct are direct
