@@ -5,8 +5,40 @@ view: session_list_with_event_history {
   derived_table: {
     datagroup_trigger: ga4_main_datagroup
 
-    sql:-- obtains a list of sessions, uniquely identified by the table date, ga_session_id event parameter, ga_session_number event parameter, and the user_pseudo_id.
-    /* select timestamp(SAFE.PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'[0-9]+'))) session_date
+    sql_create:CREATE TABLE single_partition.ga4_table_creation (session_date TIMESTAMP,
+                ga_session_id INT64,
+                ga_session_number INT64,
+                user_pseudo_id STRING,
+                sl_key STRING,
+                event_rank INT64,
+                time_to_next_event FLOAT64,
+page_view_rank INT64,
+page_view_reverse_rank INT64,
+time_to_next_page FLOAT64,
+event_date STRING,
+event_timestamp INT64,
+event_name STRING,
+event_params ARRAY<STRUCT<key STRING, value STRUCT<string_value STRING, int_value INT64, float_value FLOAT64, double_value FLOAT64>>>,
+event_previous_timestamp INT64,
+event_value_in_usd FLOAT64,
+event_bundle_sequence_id INT64,
+event_server_timestamp_offset INT64,
+user_id STRING,
+user_properties ARRAY<STRUCT<key STRING, value STRUCT<string_value STRING, int_value INT64, float_value FLOAT64, double_value FLOAT64, set_timestamp_micros INT64>>>,
+user_first_touch_timestamp INT64,
+user_ltv STRUCT<revenue FLOAT64, currency STRING>,
+device STRUCT<category STRING, mobile_brand_name STRING, mobile_model_name STRING, mobile_marketing_name STRING, mobile_os_hardware_model STRING, operating_system STRING, operating_system_version STRING, vendor_id STRING, advertising_id STRING, language STRING, is_limited_ad_tracking STRING, time_zone_offset_seconds INT64, browser STRING, browser_version STRING, web_info STRUCT<browser STRING, browser_version STRING, hostname STRING>>,
+geo STRUCT<city STRING, country STRING, continent STRING, region STRING, sub_continent STRING, metro STRING>,
+app_info STRUCT<id STRING, version STRING, install_store STRING, firebase_app_id STRING, install_source STRING>,
+traffic_source STRUCT<name STRING, medium STRING, source STRING>,
+stream_id STRING,
+platform STRING,
+event_dimensions STRUCT<hostname STRING>,
+ecommerce STRUCT<total_item_quantity INT64, purchase_revenue_in_usd FLOAT64, purchase_revenue FLOAT64, refund_value_in_usd FLOAT64, refund_value FLOAT64, shipping_value_in_usd FLOAT64, shipping_value FLOAT64, tax_value_in_usd FLOAT64, tax_value FLOAT64, unique_items INT64, transaction_id STRING>,
+items ARRAY<STRUCT<item_id STRING, item_name STRING, item_brand STRING, item_variant STRING, item_category STRING, item_category2 STRING, item_category3 STRING, item_category4 STRING, item_category5 STRING, price_in_usd FLOAT64, price FLOAT64, quantity INT64, item_revenue_in_usd FLOAT64, item_revenue FLOAT64, item_refund_in_usd FLOAT64, item_refund FLOAT64, coupon STRING, affiliation STRING, location_id STRING, item_list_id STRING, item_list_name STRING, item_list_index STRING, promotion_id STRING, promotion_name STRING, creative_name STRING, creative_slot STRING>>
+) PARTITION BY DATE(session_date)
+AS(
+select timestamp(SAFE.PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'[0-9]+'))) session_date
       ,  (select value.int_value from UNNEST(events.event_params) where key = "ga_session_id") ga_session_id
       ,  (select value.int_value from UNNEST(events.event_params) where key = "ga_session_number") ga_session_number
       ,  events.user_pseudo_id
@@ -44,9 +76,11 @@ view: session_list_with_event_history {
       , events.event_dimensions
       , events.ecommerce
       , ARRAY(select as STRUCT it.* EXCEPT(item_params) from unnest(events.items) as it) as items
-      from `@{GA4_SCHEMA}.@{GA4_TABLE_VARIABLE}` events
-      where {% incrementcondition %} timestamp(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'[0-9]+'))) {%  endincrementcondition %}
-         --where timestamp(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'[0-9]+'))) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -15 DAY)))
-           --and  timestamp(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'[0-9]+'))) <= ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -15 DAY), INTERVAL 16 DAY)))
-         */ SELECT 1 ;;
-}}
+      from `@{GA4_SCHEMA}.@{GA4_TABLE_VARIABLE}` events) ;;
+}
+dimension: session_date {
+  type: date
+  hidden: yes
+  sql: ${TABLE}.session_date ;;
+}
+}
