@@ -4,8 +4,7 @@ include: "/views/event_data_dimensions/page_funnel.view"
 view: session_list_with_event_history {
   derived_table: {
     sql_trigger_value: SELECT 1 ;;
-
-    sql_create:CREATE TABLE single_partition.ga4_table_creation (session_date TIMESTAMP,
+    sql_create:CREATE TABLE single_partition.session_list_with_event_history (session_date TIMESTAMP,
                 ga_session_id INT64,
                 ga_session_number INT64,
                 user_pseudo_id STRING,
