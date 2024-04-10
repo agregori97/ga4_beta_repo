@@ -3,7 +3,7 @@ view: session_event_packing {
   derived_table:{
     datagroup_trigger: ga4_default_datagroup
     partition_keys: ["session_date"]
-    cluster_keys: ["session_date"]
+    cluster_keys: ["sl_key","user_pseudo_id","session_date"]
     increment_key: "session_date"
     increment_offset: 0
     sql:select sl.session_date session_date

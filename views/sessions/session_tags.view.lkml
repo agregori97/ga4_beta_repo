@@ -3,7 +3,7 @@ view: session_tags{
   derived_table:{
     increment_key: "session_date"
     partition_keys: ["session_date"]
-    cluster_keys: ["session_date"]
+    cluster_keys: ["sl_key","session_date"]
     datagroup_trigger: ga4_default_datagroup
     sql:select distinct sl.sl_key, sl.session_date as session_date
   , first_value(case when ep.key = 'medium' then ep.value.string_value end) over (partition by sl.sl_key order by sl.event_timestamp desc) medium
