@@ -4,6 +4,9 @@ include: "/views/event_data_dimensions/page_funnel.view"
 view: session_list_with_event_history {
   derived_table: {
     sql_trigger_value: SELECT 1 ;;
+    increment_key: "session_date"
+    partition_keys: ["session_date"]
+    cluster_keys: ["session_date"]
     sql_create:CREATE TABLE single_partition.session_list_with_event_history (session_date TIMESTAMP,
                 ga_session_id INT64,
                 ga_session_number INT64,
@@ -75,7 +78,8 @@ select timestamp(SAFE.PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'[0-9]+
       , events.event_dimensions
       , events.ecommerce
       , ARRAY(select as STRUCT it.* EXCEPT(item_params) from unnest(events.items) as it) as items
-      from `@{GA4_SCHEMA}.@{GA4_TABLE_VARIABLE}` events) ;;
+      from `@{GA4_SCHEMA}.@{GA4_TABLE_VARIABLE}` events
+      WHERE {% incrementcondition %} session_date {% endincrementcondition %}) ;;
 }
 dimension: session_date {
   type: date
