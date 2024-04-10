@@ -1,4 +1,6 @@
 include: "/explores/sessions.explore.lkml"
+include: "/views/*/*.view.lkml"
+include: "/views/*.view.lkml"
 
 explore: pred_history {}
 view: pred_history {
@@ -52,7 +54,8 @@ view: pred_history {
 explore: incremental_prediction {hidden:yes}
 view: incremental_prediction {
   derived_table: {
-    datagroup_trigger: bqml_datagroup
+    #datagroup_trigger: bqml_datagroup
+    sql_trigger_value: ${sessions.SQL_TABLE_NAME} ;;
     create_process: {
       sql_step:
         CREATE TABLE IF NOT EXISTS ${SQL_TABLE_NAME} (
