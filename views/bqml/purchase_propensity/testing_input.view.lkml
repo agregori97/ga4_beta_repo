@@ -1,7 +1,7 @@
 include: "/views/sessions/*.view.lkml"
 view: testing_input {
   derived_table: {
-    datagroup_trigger: bqml_datagroup
+    sql_trigger_value: ${training_input.SQL_TABLE_NAME} ;;
     sql:
     select * from
     (WITH

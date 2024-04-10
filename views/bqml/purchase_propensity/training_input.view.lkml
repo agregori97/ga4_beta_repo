@@ -1,9 +1,9 @@
 include: "/views/sessions/*.view.lkml"
-include: "/views/*.view.lkml"
+include: "/views/*/*.view.lkml"
 view: training_input {
   derived_table: {
     #datagroup_trigger: bqml_datagroup
-    sql_trigger_value: ${sessions.SQL_TABLE_NAME} ;;
+    sql_trigger_value: ${device_geo.SQL_TABLE_NAME} ;;
     sql:
     WITH
       visitors_labeled AS (
