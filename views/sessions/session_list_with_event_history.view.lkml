@@ -7,7 +7,9 @@ view: session_list_with_event_history {
     increment_key: "session_date"
     partition_keys: ["session_date"]
     cluster_keys: ["session_date"]
-    sql_create:CREATE TABLE single_partition.session_list_with_event_history (session_date TIMESTAMP,
+    sql_create:CREATE TABLE single_partition.tbl1 (sesion_date INT64)
+              AS (SELECT 1 as session_date)
+    /*CREATE TABLE single_partition.session_list_with_event_history (session_date TIMESTAMP,
                 ga_session_id INT64,
                 ga_session_number INT64,
                 user_pseudo_id STRING,
@@ -79,7 +81,7 @@ select timestamp(SAFE.PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'[0-9]+
       , events.ecommerce
       , ARRAY(select as STRUCT it.* EXCEPT(item_params) from unnest(events.items) as it) as items
       from `@{GA4_SCHEMA}.@{GA4_TABLE_VARIABLE}` events
-      WHERE {% incrementcondition %} session_date {% endincrementcondition %}) ;;
+      WHERE {% incrementcondition %} session_date {% endincrementcondition %})*/ ;;
 }
 dimension: session_date {
   type: date
