@@ -3,7 +3,7 @@ include: "/views/bqml/*/*.view.lkml"
 view: model_arima {
   #extension: required
   derived_table: {
-    datagroup_trigger: bqml_datagroup
+    sql_trigger_value: ${training_input_arima.SQL_TABLE_NAME};;
     sql_create: CREATE OR REPLACE MODEL ${SQL_TABLE_NAME}
       OPTIONS(
         MODEL_TYPE='ARIMA_PLUS',

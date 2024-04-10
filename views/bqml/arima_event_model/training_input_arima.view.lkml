@@ -1,6 +1,6 @@
 view: training_input_arima {
   derived_table: {
-    datagroup_trigger: bqml_datagroup
+    sql_trigger_value: ${incremental_prediction.SQL_TABLE_NAME} ;;
     sql:SELECT
     (DATE(TIMESTAMP_MICROS(events.event_timestamp) )) AS sessions_session_date,
     events.event_name  AS events_event_name,
