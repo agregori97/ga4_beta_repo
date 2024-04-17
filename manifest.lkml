@@ -2,7 +2,7 @@ project_name: "ga_four_beta"
 
 ## Connection Constants:
 constant: GA4_CONNECTION {
-  value: "agregori-connection"
+  value: "bq-looker-marketplace"
   export: override_required
 }
 
