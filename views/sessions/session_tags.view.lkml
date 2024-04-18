@@ -6,15 +6,26 @@ view: session_tags{
     cluster_keys: ["sl_key","session_date"]
     #datagroup_trigger: ga4_default_datagroup
     sql_trigger_value: ${session_list_w_event_hist.SQL_TABLE_NAME} ;;
-    sql:select distinct sl.sl_key, sl.session_date as session_date
-  , first_value(case when ep.key = 'medium' then ep.value.string_value end) over (partition by sl.sl_key order by sl.event_timestamp desc) medium
-  , first_value(case when ep.key = 'source' then ep.value.string_value end) over (partition by sl.sl_key order by sl.event_timestamp desc) source
-  , first_value(case when ep.key = 'campaign' then ep.value.string_value end) over (partition by sl.sl_key order by sl.event_timestamp desc) campaign
-  , first_value(case when ep.key = 'page_referrer' then ep.value.string_value end) over (partition by sl.sl_key order by sl.event_timestamp desc) page_referrer
-from ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
-  , UNNEST(sl.event_params) AS ep
-where sl.event_name in ('page_view')
-and {% incrementcondition %} session_date {% endincrementcondition %}
+    sql:SELECT DISTINCT sl.sl_key, sl.session_date
+  , CASE WHEN key = 'medium' THEN value.string_value END AS medium
+  , CASE WHEN key = 'source' THEN value.string_value END AS source
+  , CASE WHEN key = 'campaign' THEN value.string_value END AS campaign
+  , CASE WHEN key = 'page_referrer' THEN value.string_value END AS page_referrer
+FROM (
+  SELECT sl_key, session_date, key, value,event_timestamp
+  FROM ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl
+  CROSS JOIN UNNEST(sl.event_params) AS sl1
+  WHERE event_name in ('page_view')
+    AND key IN ('medium','source','campaign','page_referrer')
+    AND sl_key IS NOT NULL
+) AS sl
+JOIN (
+  SELECT sl_key, session_date, MIN(event_timestamp) AS min_event_timestamp
+  FROM ${session_list_w_event_hist.SQL_TABLE_NAME} AS sl2
+  GROUP BY sl2.sl_key, sl2.session_date
+) AS min_events ON sl.sl_key = min_events.sl_key AND sl.session_date = min_events.session_date
+WHERE sl.event_timestamp = min_events.min_event_timestamp
+and {% incrementcondition %} session_date {% endincrementcondition %})
 -- NULL medium is direct, filtering out nulls to ensure last non-direct.
     ;;
   }
