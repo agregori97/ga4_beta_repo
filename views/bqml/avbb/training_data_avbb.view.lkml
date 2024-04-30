@@ -3,11 +3,10 @@ include: "/views/*/*.view.lkml"
 view: training_data_avbb {
   derived_table: {
     sql_trigger_value: ${forecasting.SQL_TABLE_NAME} ;;
-    sql: CREATE MODEL IF NOT EXISTS
-  `@{GA4_SCHEMA.avbb`
+    sql: CREATE OR REPLACE MODEL `@{GA4_SCHEMA}.avbb`
 OPTIONS
   ( MODEL_TYPE='LINEAR_REG',
-    MAX_ITERATIONS=5,
+    MAX_ITERATIONS=1,
     CALCULATE_P_VALUES=TRUE,
     CATEGORY_ENCODING_METHOD='DUMMY_ENCODING',
     ENABLE_GLOBAL_EXPLAIN=TRUE,
@@ -29,7 +28,7 @@ view: model_explanation {
   derived_table: {
     sql_trigger_value: ${training_data_avbb.SQL_TABLE_NAME} ;;
     sql: SELECT * FROM
-    ML.GLOBAL_EXPLAIN(MODEL `@{GA4_SCHEMA.avbb`) ;;
+    ML.GLOBAL_EXPLAIN(MODEL `@{GA4_SCHEMA}.avbb`) ;;
   }
   dimension: feature {
     type: string
