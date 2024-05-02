@@ -3,22 +3,27 @@ include: "/views/*/*.view.lkml"
 view: training_data_avbb {
   derived_table: {
     sql_trigger_value: ${forecasting.SQL_TABLE_NAME} ;;
-    sql: CREATE OR REPLACE MODEL `@{GA4_SCHEMA}.avbb`
+    sql: CREATE OR REPLACE MODEL `ga4_export.avbb`
 OPTIONS
   ( MODEL_TYPE='LINEAR_REG',
-    CALCULATE_P_VALUES=true,
+    CALCULATE_P_VALUES=TRUE,
+    MAX_ITERATIONS=5,
     CATEGORY_ENCODING_METHOD='DUMMY_ENCODING',
-    ENABLE_GLOBAL_EXPLAIN=true,
+    ENABLE_GLOBAL_EXPLAIN=TRUE,
     DATA_SPLIT_METHOD='AUTO_SPLIT') AS
-    SELECT sl_key,
-    traffic_source.source,
-    traffic_source.medium,
-    traffic_source.channel,
-    TIMESTAMP_DIFF(session_data.session_end,session_data.session_start,second)/86400.0 as session_duration,
-    session_data.session_page_view_count,
-    COALESCE(SUM(ecommerce.purchase_revenue_in_usd),0) as label
-    FROM ${sessions.SQL_TABLE_NAME}
-    GROUP BY 1,2,3,4
+    WITH t1 AS(SELECT sessions.sl_key,
+    session_attribution.source,
+    session_attribution.medium,
+    session_attribution.campaign,
+    device_data.device__category as device,
+    events.event_name  AS events_event_name,
+    device_data.device__is_limited_ad_tracking as lim_ad_track,
+    SUM(TIMESTAMP_DIFF(session_data.session_end,session_data.session_start,second)/86400.0) as session_duration,
+    SUM(session_data.session_page_view_count) as session_count,
+    COALESCE(SUM(event_data[SAFE_OFFSET(0)].user_ltv.revenue),0.0) as label
+    FROM ${sessions.SQL_TABLE_NAME}  as sessions
+    LEFT JOIN UNNEST(sessions.event_data) as events with offset as event_row GROUP BY 1,2,3,4,5,6,7)
+    SELECT source,medium,campaign,device,events_event_name,session_duration,session_count,lim_ad_track,LN(label) as label from t1 WHERE label>0
     ;;
   }
 }
