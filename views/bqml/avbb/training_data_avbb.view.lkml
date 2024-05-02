@@ -76,26 +76,6 @@ view: category_attribution {
   STRUCT(TRUE AS standardize))
   WHERE p_value<0.05 ;;
   }
-  dimension: processed_input {
-    type: string
-    sql: ${TABLE}.processed_input ;;
-  }
-  dimension: category {
-    type: string
-    sql: ${TABLE}.category ;;
-  }
-  dimension: weight {
-    type: number
-    sql: ${TABLE}.weight ;;
-  }
-  dimension: standard_error {
-    type: number
-    sql: ${TABLE}.standard_error ;;
-  }
-  dimension: p_value {
-    type: number
-    sql: ${TABLE}.p_value ;;
-  }
   parameter: feature {
     type: unquoted
     allowed_value: {
@@ -120,5 +100,26 @@ view: category_attribution {
     }
 
   }
+  dimension: processed_input {
+    type: string
+    sql: ${TABLE}.{% parameter feature %};;
+  }
+  dimension: category {
+    type: string
+    sql: ${TABLE}.category ;;
+  }
+  dimension: weight {
+    type: number
+    sql: ${TABLE}.weight ;;
+  }
+  dimension: standard_error {
+    type: number
+    sql: ${TABLE}.standard_error ;;
+  }
+  dimension: p_value {
+    type: number
+    sql: ${TABLE}.p_value ;;
+  }
+
 }
 explore: category_attribution {}
