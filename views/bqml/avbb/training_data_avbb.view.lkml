@@ -52,7 +52,7 @@ view: model_explanation {
   derived_table: {
     sql_trigger_value: ${training_data_avbb.SQL_TABLE_NAME} ;;
     sql: SELECT * FROM
-    ML.GLOBAL_EXPLAIN(MODEL `@{GA4_SCHEMA}.avbb`) ;;
+    ML.GLOBAL_EXPLAIN(MODEL ${avbb_model.SQL_TABLE_NAME}) ;;
   }
   dimension: feature {
     type: string
@@ -64,4 +64,61 @@ view: model_explanation {
   }
 }
 
-explore: model_explanation {}
+explore: model_explanation {
+  hidden: yes
+}
+
+view: category_attribution {
+  derived_table: {
+    sql_trigger_value: ${model_explanation.SQL_TABLE_NAME} ;;
+    sql: SELECT * FROM ML.ADVANCED_WEIGHTS(
+  MODEL ${avbb_model.SQL_TABLE_NAME},
+  STRUCT(TRUE AS standardize))
+  WHERE p_value<0.05 ;;
+  }
+  dimension: processed_input {
+    type: string
+    sql: ${TABLE}.processed_input ;;
+  }
+  dimension: category {
+    type: string
+    sql: ${TABLE}.category ;;
+  }
+  dimension: weight {
+    type: number
+    sql: ${TABLE}.weight ;;
+  }
+  dimension: standard_error {
+    type: number
+    sql: ${TABLE}.standard_error ;;
+  }
+  dimension: p_value {
+    type: number
+    sql: ${TABLE}.p_value ;;
+  }
+  parameter: feature {
+    type: unquoted
+    allowed_value: {
+      label: "Campaign"
+      value: "campaign"
+    }
+    allowed_value: {
+      label: "Source"
+      value: "source"
+    }
+    allowed_value: {
+      label: "Medium"
+      value: "medium"
+    }
+    allowed_value: {
+      label: "Event Name"
+      value: "events_event_name"
+    }
+    allowed_value: {
+      label: "Device"
+      value: "device"
+    }
+
+  }
+}
+explore: category_attribution {}
