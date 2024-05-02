@@ -102,7 +102,7 @@ view: category_attribution {
   }
   dimension: processed_input {
     type: string
-    sql: ${TABLE}.{% parameter feature %};;
+    sql: ${TABLE}.processed_input;;
   }
   dimension: category {
     type: string
