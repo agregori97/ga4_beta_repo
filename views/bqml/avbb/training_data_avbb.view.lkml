@@ -3,15 +3,7 @@ include: "/views/*/*.view.lkml"
 view: training_data_avbb {
   derived_table: {
     sql_trigger_value: ${forecasting.SQL_TABLE_NAME} ;;
-    sql: CREATE OR REPLACE MODEL `ga4_export.avbb`
-OPTIONS
-  ( MODEL_TYPE='LINEAR_REG',
-    CALCULATE_P_VALUES=TRUE,
-    MAX_ITERATIONS=5,
-    CATEGORY_ENCODING_METHOD='DUMMY_ENCODING',
-    ENABLE_GLOBAL_EXPLAIN=TRUE,
-    DATA_SPLIT_METHOD='AUTO_SPLIT') AS
-    WITH t1 AS(SELECT sessions.sl_key,
+    sql:SELECT sessions.sl_key,
     session_attribution.source,
     session_attribution.medium,
     session_attribution.campaign,
@@ -22,8 +14,36 @@ OPTIONS
     SUM(session_data.session_page_view_count) as session_count,
     COALESCE(SUM(event_data[SAFE_OFFSET(0)].user_ltv.revenue),0.0) as label
     FROM ${sessions.SQL_TABLE_NAME}  as sessions
-    LEFT JOIN UNNEST(sessions.event_data) as events with offset as event_row GROUP BY 1,2,3,4,5,6,7)
-    SELECT source,medium,campaign,device,events_event_name,session_duration,session_count,lim_ad_track,LN(label) as label from t1 WHERE label>0
+    LEFT JOIN UNNEST(sessions.event_data) as events with offset as event_row GROUP BY 1,2,3,4,5,6,7  ;;
+  }
+  dimension: sl_key {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.sl_key ;;
+  }
+}
+
+
+view: avbb_model {
+  derived_table: {
+    sql_trigger_value: ${training_data_avbb.SQL_TABLE_NAME}  ;;
+    sql_create: CREATE OR REPLACE MODEL ${SQL_TABLE_NAME}
+OPTIONS
+  ( MODEL_TYPE='LINEAR_REG',
+    CALCULATE_P_VALUES=TRUE,
+    MAX_ITERATIONS=5,
+    CATEGORY_ENCODING_METHOD='DUMMY_ENCODING',
+    ENABLE_GLOBAL_EXPLAIN=TRUE,
+    DATA_SPLIT_METHOD='AUTO_SPLIT') AS
+    SELECT source,
+            medium,
+            campaign,
+            device,
+            events_event_name,
+            session_duration,
+            session_count,
+            lim_ad_track,
+            LN(label) as label from ${training_data_avbb.SQL_TABLE_NAME}   WHERE label>0
     ;;
   }
 }
