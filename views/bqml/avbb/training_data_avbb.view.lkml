@@ -40,7 +40,7 @@ OPTIONS
             campaign,
             device,
             events_event_name,
-            session_duration,
+            LN(session_duration) as session_duration,
             session_count,
             lim_ad_track,
             LN(label) as label from ${training_data_avbb.SQL_TABLE_NAME}   WHERE label>0
@@ -101,5 +101,25 @@ view: category_attribution {
 
 }
 explore: category_attribution {
-
+  hidden: yes
 }
+
+view: evaluation {
+  derived_table: {
+    sql_trigger_value: ${category_attribution.SQL_TABLE_NAME} ;;
+    sql: SELECT * FROM  ML.EVALUATE(MODEL ${avbb_model.SQL_TABLE_NAME});;
+  }
+  dimension: MAE {
+    type: number
+    sql: ${TABLE}.mean_absolute_error ;;
+  }
+  dimension: MSLE {
+    type: number
+    sql: ${TABLE}.mean_squared_log_error ;;
+  }
+  dimension: r_squared {
+    type: number
+    sql: ${TABLE}.r2_score ;;
+  }
+}
+explore: evaluation {}
