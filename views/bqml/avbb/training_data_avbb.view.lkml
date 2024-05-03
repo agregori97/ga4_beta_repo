@@ -74,10 +74,10 @@ view: category_attribution {
     sql: SELECT * FROM ML.ADVANCED_WEIGHTS(
   MODEL ${avbb_model.SQL_TABLE_NAME},
   STRUCT(TRUE AS standardize))
-  WHERE p_value<0.05 ;;
+  WHERE p_value<0.05 AND processed_input= {% parameter parameter_name %} ;;
   }
   parameter: feature {
-    type: unquoted
+    type: string
     allowed_value: {
       label: "Campaign"
       value: "campaign"
