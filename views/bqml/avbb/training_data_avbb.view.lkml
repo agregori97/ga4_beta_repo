@@ -70,11 +70,12 @@ explore: model_explanation {
 
 view: category_attribution {
   derived_table: {
+
     sql_trigger_value: ${model_explanation.SQL_TABLE_NAME} ;;
     sql: SELECT * FROM ML.ADVANCED_WEIGHTS(
   MODEL ${avbb_model.SQL_TABLE_NAME},
   STRUCT(TRUE AS standardize))
-  WHERE p_value<0.05 AND processed_input=  parameter_name._parameter_value ;;
+  WHERE p_value<0.05 ;;
   }
   parameter: feature {
     type: string
@@ -122,4 +123,6 @@ view: category_attribution {
   }
 
 }
-explore: category_attribution {}
+explore: category_attribution {
+  always_filter: {filters: [processed_input: "{% parameter_name.parameter_value %}"]}
+}
