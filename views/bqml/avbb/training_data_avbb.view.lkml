@@ -43,7 +43,7 @@ OPTIONS
             LN(session_duration) as session_duration,
             session_count,
             lim_ad_track,
-            LN(label) as label from ${training_data_avbb.SQL_TABLE_NAME}   WHERE label>0
+            LN(label) as label from ${training_data_avbb.SQL_TABLE_NAME}   WHERE label>0 AND session_duration>0
     ;;
   }
 }
