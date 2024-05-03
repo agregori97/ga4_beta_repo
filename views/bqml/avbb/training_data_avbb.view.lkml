@@ -77,30 +77,7 @@ view: category_attribution {
   STRUCT(TRUE AS standardize))
   WHERE p_value<0.05 ;;
   }
-  parameter: feature {
-    type: string
-    allowed_value: {
-      label: "Campaign"
-      value: "campaign"
-    }
-    allowed_value: {
-      label: "Source"
-      value: "source"
-    }
-    allowed_value: {
-      label: "Medium"
-      value: "medium"
-    }
-    allowed_value: {
-      label: "Event Name"
-      value: "events_event_name"
-    }
-    allowed_value: {
-      label: "Device"
-      value: "device"
-    }
 
-  }
   dimension: processed_input {
     type: string
     sql: ${TABLE}.processed_input;;
@@ -124,5 +101,5 @@ view: category_attribution {
 
 }
 explore: category_attribution {
-  always_filter: {filters: [processed_input: "{% parameter_name.parameter_value %}"]}
+
 }
