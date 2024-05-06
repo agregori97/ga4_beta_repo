@@ -122,4 +122,6 @@ view: evaluation {
     sql: ${TABLE}.r2_score ;;
   }
 }
-explore: evaluation {}
+explore: evaluation {
+  hidden: yes
+}
