@@ -29,9 +29,9 @@ view: model_arima {
 
    }
   #explore: train_data_arima {fields:[ts,ev_count]}
-  explore: model_evaluation {}
+  explore: model_evaluation {hidden:yes}
   #
-  explore: optimal_model_coeff {}
+  explore: optimal_model_coeff {hidden:yes}
   #explore: forecasting {}
   view: optimal_model_coeff{
     derived_table: {
