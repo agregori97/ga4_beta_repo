@@ -4,7 +4,7 @@ view: session_tags{
     increment_key: "session_date"
     partition_keys: ["session_date"]
     cluster_keys: ["sl_key","session_date"]
-    #datagroup_trigger: ga4_default_datagroup
+    #datagroup_trigger: ga4_t_default_datagroup
     sql_trigger_value: ${session_list_w_event_hist.SQL_TABLE_NAME} ;;
     sql:SELECT DISTINCT sl.sl_key, sl.session_date
   , CASE WHEN key = 'medium' THEN value.string_value END AS medium
